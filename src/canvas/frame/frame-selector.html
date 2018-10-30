@@ -1,0 +1,37 @@
+<template>
+  <div class="list-group border border-info rounded-right" style="height: 100%; overflow-y: scroll; -webkit-overflow-scrolling: touch;">
+    <button type="button" class="list-group-item list-group-item-action frame-selector-button border-0" repeat.for="frame of frames" click.delegate="select(frame)">
+      <div class="row">
+        <div class="col-md-6 vcenter frame-selector-row">
+          <img src="${frame.picture.url}"  alt="${frame.name}" class="img-reponsive img-rounded frame-selector-thumbnail vcenter" />
+        </div>
+        <div class="col-md-6 vcenter">
+          <h4 class="list-group-item-heading">${frame.name}</h4>
+          <p class="list-group-item-text" title="${frame.description}">${frame.description}</p>
+        </div>
+      </div>
+    </button>
+  </div>
+
+  <style>
+    .frame-selector-button {
+      cursor: pointer;
+      min-height: 40%;
+      max-height: 40%;
+      overflow: visible;
+    }
+
+    .frame-selector-thumbnail {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  </style>
+</template>

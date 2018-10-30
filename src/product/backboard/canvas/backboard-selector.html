@@ -1,0 +1,33 @@
+<template>
+  <a href="#" class="list-group-item" repeat.for="backboard of backboards">
+    <div class="row" click.delegate="select(backboard)">
+      <div class="col-md-6 vcenter backboard-selector-row">
+        <img src="${backboard.picture.url}"  alt="${backboard.name}" class="img-reponsive img-rounded backboard-selector-thumbnail vcenter" />
+      </div>
+      <div class="col-md-6 vcenter">
+        <h4 class="list-group-item-heading">${backboard.name}</h4>
+        <p class="list-group-item-text" title="${backboard.description}">${backboard.description}</p>
+      </div>
+    </div>
+  </a>
+
+  <style>
+    .backboard-selector-row {
+      background: aqua;
+    }
+
+    .backboard-selector-thumbnail {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      background: blue;
+    }
+  </style>
+</template>

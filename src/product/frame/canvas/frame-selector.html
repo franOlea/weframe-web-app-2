@@ -1,0 +1,33 @@
+<template>
+  <a href="#" class="list-group-item" repeat.for="frame of frames">
+    <div class="row" click.delegate="select(frame)">
+      <div class="col-md-6 vcenter frame-selector-row">
+        <img src="${frame.picture.url}"  alt="${frame.name}" class="img-reponsive img-rounded frame-selector-thumbnail vcenter" />
+      </div>
+      <div class="col-md-6 vcenter">
+        <h4 class="list-group-item-heading">${frame.name}</h4>
+        <p class="list-group-item-text" title="${frame.description}">${frame.description}</p>
+      </div>
+    </div>
+  </a>
+
+  <style>
+    .frame-selector-row {
+      background: aqua;
+    }
+
+    .frame-selector-thumbnail {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      background: blue;
+    }
+  </style>
+</template>

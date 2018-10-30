@@ -1,0 +1,28 @@
+<template>
+  <div class="row" style="height: 90%;">
+    <img src="${imageUrl}" class="img-reponsive img-rounded workspace-image vcenter" if.bind="imageUrl"/>
+  </div>
+  <div class="row">
+    <abt-dropdown title="Tamaño (%)" type="light" placement="top" size="lg" style="padding-left: 15px; padding-right: 15px; z-index: 2;">
+      <abt-dropdown-item>50%</abt-dropdown-item>
+      <abt-dropdown-item>80%</abt-dropdown-item>
+      <abt-dropdown-item>90%</abt-dropdown-item>
+      <abt-dropdown-item>100%</abt-dropdown-item>
+    </abt-dropdown>
+    <button type="button" class="btn btn-success btn-lg" style="z-index: 2;">Elegir</button>
+  </div>
+  <style>
+    .workspace-image {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  </style>
+</template>

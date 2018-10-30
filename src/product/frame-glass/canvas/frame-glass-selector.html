@@ -1,0 +1,30 @@
+<template>
+  <a href="#" class="list-group-item" repeat.for="frameGlass of frameGlasses">
+    <div class="row" click.delegate="select(frameGlass)">
+      <div class="col-md-12 vcenter">
+        <h4 class="list-group-item-heading">${frameGlass.name}</h4>
+        <p class="list-group-item-text" title="${frameGlass.description}">${frameGlass.description}</p>
+      </div>
+    </div>
+  </a>
+
+  <style>
+    .frame-glass-selector-row {
+      background: aqua;
+    }
+
+    .frame-glass-selector-thumbnail {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      background: blue;
+    }
+  </style>
+</template>

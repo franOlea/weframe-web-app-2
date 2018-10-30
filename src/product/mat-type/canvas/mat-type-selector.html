@@ -1,0 +1,33 @@
+<template>
+  <a href="#" class="list-group-item" repeat.for="matType of matTypes">
+    <div class="row" click.delegate="select(matType)">
+      <div class="col-md-6 vcenter mat-type-selector-row">
+        <img src="${matType.picture.url}"  alt="${matType.name}" class="img-reponsive img-rounded mat-type-selector-thumbnail vcenter" />
+      </div>
+      <div class="col-md-6 vcenter">
+        <h4 class="list-group-item-heading">${matType.name}</h4>
+        <p class="list-group-item-text" title="${matType.description}">${matType.description}</p>
+      </div>
+    </div>
+  </a>
+
+  <style>
+    .mat-type-selector-row {
+      background: aqua;
+    }
+
+    .mat-type-selector-thumbnail {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      background: blue;
+    }
+  </style>
+</template>

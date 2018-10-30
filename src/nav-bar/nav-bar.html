@@ -1,0 +1,14 @@
+<template>
+  <abt-navbar expand-size="lg" navbar-color-type="dark" background-color-type="primary">
+    <abt-navbar-brand>WeFrame</abt-navbar-brand>
+    <abt-navbar-toggler></abt-navbar-toggler>
+    <abt-navbar-collapser>
+      <abt-navbar-nav class="mr-auto">
+        <abt-navbar-link active="true" href="#">Sobre nosotros</abt-navbar-link>
+        <abt-navbar-link href="#">Arma tu marco</abt-navbar-link>
+        <abt-navbar-link route-href="route: canvas">Canvas</abt-navbar-link>
+      </abt-navbar-nav>
+      <abt-button class="btn btn-secondary my-2 my-sm-0" click.call="login()">Ingresar</abt-button>
+    </abt-navbar-collapser>
+  </abt-navbar>
+</template>
