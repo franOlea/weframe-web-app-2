@@ -29,7 +29,8 @@ export class FrameSelector {
   }
 
   private select(frame: Frame) {
-    this.eventAggregator.publish("product-selected-event", frame.picture.url);
+    this.eventAggregator.publish("product-selected", frame.picture.url);
+    this.eventAggregator.publish("frame-product-selected", frame);
   }
 
 }

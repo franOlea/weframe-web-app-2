@@ -5,12 +5,40 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 export class Workspace {
 
   private imageUrl: string;
+  private pictureTab: boolean = true;
+  private visualizedProduct: any;
+  private selectedProduct: any;
+  private currentProductSelectable: boolean = false;
 
   constructor(private readonly eventAggregator: EventAggregator) {
     let _self = this;
-    this.eventAggregator.subscribe("product-selected-event", url  => {
+    this.eventAggregator.subscribe("product-selected", url  => {
       _self.imageUrl = url;
     });
+    this.eventAggregator.subscribe("current-selector-change", selector => {
+      this.pictureTab = (selector == "picture/picture-selector");
+    });
+    this.eventAggregator.subscribe("frame-product-selected", frame => {
+      this.setVisualized(frame);
+    });
+    this.eventAggregator.subscribe("backboard-product-selected", backboard => {
+      this.setVisualized(backboard);
+    });
+  }
+
+  setVisualized(visualizedProduct : any) {
+    this.visualizedProduct = visualizedProduct;
+    this.setCurrentProductIsSelectable();
+  }
+
+  select() {
+    this.selectedProduct = this.visualizedProduct;
+    this.setCurrentProductIsSelectable();
+    this.eventAggregator.publish("product-chosen", this.selectedProduct);
+  }
+
+  private setCurrentProductIsSelectable() {
+    this.currentProductSelectable = this.visualizedProduct != this.selectedProduct;
   }
 
 }
