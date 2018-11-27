@@ -10,7 +10,6 @@ export class Canvas {
 
   changeSelector(selector: string) {
     this.currentSelector = selector;
-    console.log(this.currentSelector);
     this.eventAggregator.publish("current-selector-change", selector);
   }
 

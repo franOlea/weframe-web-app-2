@@ -10,6 +10,7 @@ import {UserService} from './api/user-service';
 
 import {PLATFORM} from 'aurelia-pal';
 import * as Bluebird from 'bluebird';
+import {CanvasProductManager} from "./canvas/canvas-product-manager";
 
 // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
 Bluebird.config({ warnings: { wForgottenReturn: false } });
@@ -33,6 +34,7 @@ export function configure(aurelia: Aurelia) {
   const authService = new AuthService(auth0, httpService);
   authService.initialize();
   const userService = new UserService(httpService);
+  const canvasProductManager = new CanvasProductManager();
 
   aurelia.container.registerSingleton(AuthService, () => {
     return authService;
@@ -40,6 +42,10 @@ export function configure(aurelia: Aurelia) {
 
   aurelia.container.registerSingleton(UserService, () => {
     return userService;
+  });
+
+  aurelia.container.registerSingleton(CanvasProductManager, () => {
+    return canvasProductManager;
   });
 
   return aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app')));

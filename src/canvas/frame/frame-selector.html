@@ -1,6 +1,6 @@
 <template>
   <div class="list-group border border-info rounded-right" style="height: 100%; overflow-y: scroll; -webkit-overflow-scrolling: touch;">
-    <button type="button" class="list-group-item list-group-item-action frame-selector-button border-0" repeat.for="frame of frames" click.delegate="select(frame)">
+    <button type="button" class="list-group-item list-group-item-action frame-selector-button border-0 ${frame.id == selectedFrame.id ? 'active' : ''}" repeat.for="frame of frames" click.delegate="select(frame)">
       <div class="row">
         <div class="col-md-6 vcenter frame-selector-row">
           <img src="${frame.picture.url}"  alt="${frame.name}" class="img-reponsive img-rounded frame-selector-thumbnail vcenter" />
