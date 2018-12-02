@@ -6,7 +6,6 @@ export class App {
   private router: Router;
 
   configureRouter(config: RouterConfiguration, router: Router) {
-
     this.router = router;
     config.map([
       { route: 'canvas', name: 'canvas', moduleId: PLATFORM.moduleName('canvas/canvas'), nav: false },
@@ -14,6 +13,7 @@ export class App {
       { route: 'callback', name: 'callback', moduleId: PLATFORM.moduleName('api/login-callback'), nav: false }
     ]);
     config.title = 'WeFrame';
+    config.mapUnknownRoutes('api/login-callback');
   }
 
 }
