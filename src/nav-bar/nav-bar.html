@@ -6,9 +6,11 @@
       <abt-navbar-nav class="mr-auto">
         <abt-navbar-link active="true" href="#">Sobre nosotros</abt-navbar-link>
         <abt-navbar-link href="#">Arma tu marco</abt-navbar-link>
-        <abt-navbar-link route-href="route: canvas">Canvas</abt-navbar-link>
+        <abt-navbar-link route-href="route: canvas" if.bind="authenticated">Canvas</abt-navbar-link>
+        <abt-navbar-link route-href="route: image-upload" if.bind="authenticated">Subir foto</abt-navbar-link>
       </abt-navbar-nav>
-      <abt-button class="btn btn-secondary my-2 my-sm-0" click.call="login()">Ingresar</abt-button>
+      <abt-button class="btn btn-secondary my-2 my-sm-0" click.call="login()" if.bind="!authenticated">Ingresar</abt-button>
+      <abt-button class="btn btn-warning my-2 my-sm-0" click.call="logout()" if.bind="authenticated">Salir</abt-button>
     </abt-navbar-collapser>
   </abt-navbar>
 </template>

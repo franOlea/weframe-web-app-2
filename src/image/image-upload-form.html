@@ -1,0 +1,29 @@
+<template>
+  <require from="./blob-to-url"></require>
+  <require from="./file-list-to-array"></require>
+  <require from="./user-picture-gallery"></require>
+
+  <div id="image-preview-div" style="display: none">
+    <label for="imageFile">Selected image:</label>
+    <br>
+    <img id="preview-img" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+  </div>
+
+  <div class="form-group">
+    <input type="file" name="file" id="imageFile" required accept=".jpg" files.bind="selectedFiles">
+  </div>
+
+  <div>
+    <ul>
+      <li repeat.for="file of selectedFiles | fileListToArray">
+        <img src.bind="file | blobToUrl" />
+        <h3>${file.name}: ${file.type} ${file.size / 1000} kb</h3>
+        <p>Last Modified: ${file.lastModifiedDate}</p>
+      </li>
+    </ul>
+  </div>
+
+  <button class="btn btn-lg btn-primary" id="upload-button" type="submit" click.trigger="upload()">Subir</button>
+
+  <user-picture-gallery></user-picture-gallery>
+</template>

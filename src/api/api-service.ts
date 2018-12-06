@@ -63,7 +63,7 @@ export abstract class ApiService<T> {
         .withContent(entity)
         .send()
         .then(success => {
-          if (success.statusCode == 200) {
+          if (success.statusCode == 201 || success.statusCode == 200) {
             resolve();
           } else {
             console.error(success);

@@ -1,19 +1,28 @@
 import { inject } from 'aurelia-framework';
 import { UserService } from '../api/user-service';
 import { AuthService } from '../api/auth/auth-service';
+import { EventAggregator } from 'aurelia-event-aggregator';
 
-@inject(UserService, AuthService)
+@inject(UserService, AuthService, EventAggregator)
 export class NavBar {
 
   private authenticated: boolean;
   private user;
 
   constructor(private readonly userService: UserService, 
-              private readonly authService: AuthService) {
+              private readonly authService: AuthService,
+              private readonly eventAggregator: EventAggregator) {
+    this.eventAggregator.subscribe("auth-state-change-event", event => {
+      this.checkAuthenticationState();
+    });
   }
 
   created(): void {
-    if(this.isAuthenticated()) {
+    this.checkAuthenticationState();
+  }
+
+  private checkAuthenticationState() {
+    if (this.isAuthenticated()) {
       this.authenticated = true;
       this.getCurrentUser();
     } else {

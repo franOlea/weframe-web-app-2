@@ -12,6 +12,8 @@ import {PLATFORM} from 'aurelia-pal';
 import * as Bluebird from 'bluebird';
 import {CanvasProductManager} from "./canvas/canvas-product-manager";
 
+import {EventAggregator} from 'aurelia-event-aggregator';
+
 // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
 Bluebird.config({ warnings: { wForgottenReturn: false } });
 
@@ -31,10 +33,14 @@ export function configure(aurelia: Aurelia) {
   const auth0 = getAuth0();
   const httpClient = getHttpClient();
   const httpService = new HttpService(httpClient);
-  const authService = new AuthService(auth0, httpService);
+  const authService = new AuthService(auth0, httpService, aurelia.container.get(EventAggregator));
   const userService = new UserService(httpService);
   const canvasProductManager = new CanvasProductManager();
   authService.initialize();
+
+  aurelia.container.registerSingleton(HttpService, () => {
+    return httpService;
+  });
 
   aurelia.container.registerSingleton(AuthService, () => {
     return authService;

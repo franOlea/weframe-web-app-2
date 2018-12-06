@@ -35,6 +35,7 @@ export class HttpService implements AuthListener {
   onAuthenticated(token: string): void {
     this.token = token;
   }
+
   onUnauthenticated(): void {
     this.token = null;
   }

@@ -1,12 +1,15 @@
 import { WebAuth } from 'auth0-js';
 
 import { AuthListener } from './auth-listener';
+import { EventAggregator } from 'aurelia-event-aggregator';
+import {AuthStateChangeEvent} from "./AuthStateChangeEvent";
 
 export class AuthService {
 
   constructor(private readonly auth0: WebAuth,
-              private readonly listener: AuthListener) {
-    console.log("constructed auth service")}
+              private readonly listener: AuthListener,
+              private readonly eventAggregator: EventAggregator){
+  };
 
   login(): void {
     console.log("Loging in.");
@@ -28,14 +31,14 @@ export class AuthService {
           this.persistToken(authResult);
           this.listener.onAuthenticated(authResult.accessToken);
           console.log("Login successful for user " + authResult.idTokenPayload.sub);
-          resolve();
-        } else if (err) {
-          console.error(err);
-          this.listener.onUnauthenticated();
+          this.eventAggregator.publish("auth-state-change-event",
+            new AuthStateChangeEvent(true, authResult.accessToken));
           resolve();
         } else {
           console.error("Login unsuccessful with unknown error.");
           this.listener.onUnauthenticated();
+          this.eventAggregator.publish(AuthStateChangeEvent,
+            new AuthStateChangeEvent(false, null));
           resolve();
         }
       });
@@ -47,11 +50,15 @@ export class AuthService {
     if (this.hasExpiredToken()) {
       console.debug("Expired token, calling listener for no authentication.");
       this.listener.onUnauthenticated();
+      this.eventAggregator.publish(AuthStateChangeEvent,
+        new AuthStateChangeEvent(false, null));
     } else {
       console.debug("Valid token present, loading token.");
       const token = this.loadToken();
       console.debug("Token loaded, calling listener for authentication.");
       this.listener.onAuthenticated(token.accessToken);
+      this.eventAggregator.publish(AuthStateChangeEvent,
+        new AuthStateChangeEvent(true, token.accessToken));
     }
   }
 
