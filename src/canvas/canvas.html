@@ -2,9 +2,10 @@
   <require from="./workspace"></require>
   <require from="./frame/frame-selector"></require>
   <require from="./backboard/backboard-selector"></require>
+  <require from="./picture/picture-selector"></require>
   <div style="padding: 15px; height: 92%;">
     <div class="btn-group btn-group-lg btn-group-toggle d-flex" role="group" aria-label="Basic example" style="width: 100%;">
-      <button type="button" class="btn btn-success flex-fill" disabled>Imagen</button>
+      <button type="button" class="btn btn-success flex-fill" click.trigger="changeSelector('picture/picture-selector')">Imagen</button>
       <button type="button" class="btn btn-outline-dark flex-fill active" click.trigger="changeSelector('frame/frame-selector')">Marco</button>
       <button type="button" class="btn btn-outline-danger flex-fill" click.trigger="changeSelector('backboard/backboard-selector')">Panel anterior</button>
       <button type="button" class="btn btn-outline-secondary flex-fill">Panel posterior</button>
