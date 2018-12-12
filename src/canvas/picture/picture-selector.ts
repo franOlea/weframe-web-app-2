@@ -14,11 +14,16 @@ export class PictureSelector {
   private selectedPicture : UserPicture;
   private error : Error;
 
-  constructor(private service : UserPictureService, private eventAggregator : EventAggregator, private manager : CanvasProductManager) {}
+  constructor(private service : UserPictureService, private eventAggregator : EventAggregator, private manager : CanvasProductManager) {
+    // this.eventAggregator.subscribe("current-selector-change", selector => {
+    //   if(selector == "picture/picture-selector") {
+    //     this.selectedPicture = this.manager.selectedPicture;
+    //   }
+    // });
+  }
 
   created() {
     this.updateUserPictureList();
-    this.selectedPicture = this.manager.selectedPicture;
   }
 
   private updateUserPictureList(page : number = 0, size : number = 10) : void {

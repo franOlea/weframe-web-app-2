@@ -1,4 +1,5 @@
 <template>
+  <div class="d-none">${userPicture.picture.key}</div>
   <div class="list-group border border-info rounded-right" style="height: 100%; overflow-y: scroll; -webkit-overflow-scrolling: touch;">
     <button type="button" class="list-group-item list-group-item-action user-picture-selector-button border-0 ${userPicture.picture.key == selectedPicture.picture.key ? 'active' : ''}" repeat.for="userPicture of userPictures" click.delegate="select(userPicture)">
       <div class="row">

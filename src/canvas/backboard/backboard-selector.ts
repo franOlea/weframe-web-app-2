@@ -2,15 +2,22 @@ import {inject} from 'aurelia-framework';
 import {Backboard, BackboardService} from "../../product/backboard/backboard-service";
 import {Error} from "../../error/Error";
 import {EventAggregator} from 'aurelia-event-aggregator';
+import {CanvasProductManager} from "../canvas-product-manager";
 
-@inject(BackboardService, EventAggregator)
+@inject(BackboardService, EventAggregator, CanvasProductManager)
 export class BackboardSelector {
 
   private working : boolean;
   private backboards : Backboard[];
+  private selectedBackboard : Backboard;
   private error : Error;
 
-  constructor(private service : BackboardService, private eventAggregator: EventAggregator) {
+  constructor(private service : BackboardService, private eventAggregator: EventAggregator, private manager: CanvasProductManager) {
+    // this.eventAggregator.subscribe("current-selector-change", selector => {
+    //   if(selector == "backboard/backboard-selector") {
+    //     this.selectedBackboard = this.manager.selectedBackboard;
+    //   }
+    // });
   }
 
   created() {
@@ -31,6 +38,8 @@ export class BackboardSelector {
   private select(backboard: Backboard) {
     this.eventAggregator.publish("product-selected", backboard.picture.url);
     this.eventAggregator.publish("backboard-product-selected", backboard);
+    this.selectedBackboard = backboard;
+    this.manager.selectedBackboard = backboard;
   }
 
 }

@@ -3,12 +3,6 @@
     <img src="${imageUrl}" class="img-reponsive img-rounded workspace-image vcenter" if.bind="imageUrl"/>
   </div>
   <div class="row">
-    <abt-dropdown title="Tamaño (%)" type="light" placement="top" size="lg" style="margin-left: 15px; z-index: 2;" show.bind="pictureTab">
-      <abt-dropdown-item>50%</abt-dropdown-item>
-      <abt-dropdown-item>80%</abt-dropdown-item>
-      <abt-dropdown-item>90%</abt-dropdown-item>
-      <abt-dropdown-item>100%</abt-dropdown-item>
-    </abt-dropdown>
     <abt-button size="lg" bs-type="success" style="z-index: 2; margin-left: 15px;" click.call="select()" if.bind="currentProductSelectable">Elegir</abt-button>
   </div>
   <style>

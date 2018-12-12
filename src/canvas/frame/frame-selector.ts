@@ -11,13 +11,19 @@ export class FrameSelector {
   // noinspection JSMismatchedCollectionQueryUpdate
   private frames : Frame[];
   private selectedFrame : Frame;
+  private selected : boolean = false;
   private error : Error;
 
-  constructor(private service : FrameService, private eventAggregator : EventAggregator, private manager : CanvasProductManager) {}
+  constructor(private service : FrameService, private eventAggregator : EventAggregator, private manager : CanvasProductManager) {
+    // this.eventAggregator.subscribe("current-selector-change", selector => {
+    //   if(selector == "frame/frame-selector") {
+    //     this.selectedFrame = this.manager.selectedFrame;
+    //   }
+    // });
+  }
 
   created() {
     this.updateFrameList();
-    this.selectedFrame = this.manager.selectedFrame;
   }
 
   private updateFrameList(page : number = 0, size : number = 10) : void {

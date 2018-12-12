@@ -5,7 +5,6 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 export class Workspace {
 
   private imageUrl: string;
-  private pictureTab: boolean = true;
   private visualizedProduct: any;
   private selectedProduct: any;
   private currentProductSelectable: boolean = false;
@@ -16,13 +15,16 @@ export class Workspace {
       _self.imageUrl = url;
     });
     this.eventAggregator.subscribe("current-selector-change", selector => {
-      this.pictureTab = (selector == "picture/picture-selector");
+
     });
     this.eventAggregator.subscribe("frame-product-selected", frame => {
       this.setVisualized(frame);
     });
     this.eventAggregator.subscribe("backboard-product-selected", backboard => {
       this.setVisualized(backboard);
+    });
+    this.eventAggregator.subscribe("picture-product-selected", userPicture => {
+      this.setVisualized(userPicture);
     });
   }
 
