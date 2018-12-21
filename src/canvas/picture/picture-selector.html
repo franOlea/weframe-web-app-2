@@ -1,11 +1,16 @@
 <template>
-  <div class="d-none">${userPicture.picture.key}</div>
-  <div class="list-group border border-info rounded-right" style="height: 100%; overflow-y: scroll; -webkit-overflow-scrolling: touch;">
-    <button type="button" class="list-group-item list-group-item-action user-picture-selector-button border-0 ${userPicture.picture.key == selectedPicture.picture.key ? 'active' : ''}" repeat.for="userPicture of userPictures" click.delegate="select(userPicture)">
-      <div class="row">
-          <img src="${userPicture.picture.url}"  alt="${userPicture.picture.name}" class="img-reponsive img-rounded user-picture-selector-thumbnail vcenter" />
+  <div class="d-none">${selectedPicture.picture.key}</div>
+  <div style="height: 100%;">
+    <div class="card bg-dark text-white user-picture-selector-button" repeat.for="userPicture of userPictures" click.delegate="select(userPicture)">
+      <img class="card-img" src="${userPicture.picture.url}"  alt="${userPicture.picture.name}">
+      <div class="card-img-overlay">
+        <span style="font-size: 7rem;" if.bind="userPicture.picture.key == selectedPicture.picture.key">
+          <span style="color: lawngreen;">
+            <i class="fas fa-check-circle"></i>
+          </span>
+        </span>
       </div>
-    </button>
+    </div>
   </div>
 
   <style>
@@ -16,17 +21,17 @@
       overflow: visible;
     }
 
-    .user-picture-selector-thumbnail {
-      max-height: 100%;
-      max-width: 100%;
-      width: auto;
-      height: auto;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      margin: auto;
-    }
+    /*.user-picture-selector-thumbnail {*/
+      /*max-height: 100%;*/
+      /*max-width: 100%;*/
+      /*width: auto;*/
+      /*height: auto;*/
+      /*position: absolute;*/
+      /*top: 0;*/
+      /*bottom: 0;*/
+      /*left: 0;*/
+      /*right: 0;*/
+      /*margin: auto;*/
+    /*}*/
   </style>
 </template>

@@ -3,14 +3,9 @@ import {DeleteAbleApiService} from '../../api/delete-able-api-service';
 import {HttpService} from "../../api/http/http-service";
 import {Product} from "../product";
 import {Picture} from "../picture";
+import {ApiParser} from "../../api/api-service";
 
-@inject(HttpService)
-export class BackboardService extends DeleteAbleApiService<Backboard> {
-
-
-  constructor(httpService: HttpService) {
-    super(httpService, "/backboards");
-  }
+export class BackboardParser implements ApiParser<Backboard> {
 
   parseOne(object): Backboard {
     let id = object.id;
@@ -27,6 +22,16 @@ export class BackboardService extends DeleteAbleApiService<Backboard> {
   parseArray(array: {_embedded: {backboards: object[]}}): Backboard[] {
     return array._embedded.backboards.map(object => this.parseOne(object));
   }
+
+}
+
+@inject(HttpService, BackboardParser)
+export class BackboardService extends DeleteAbleApiService<Backboard> {
+
+  constructor(httpService: HttpService, backboardParser: BackboardParser) {
+    super(httpService, "/backboards", 3000, backboardParser);
+  }
+
 }
 
 export class Backboard extends Product {

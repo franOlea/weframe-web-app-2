@@ -2,13 +2,9 @@ import {inject} from 'aurelia-framework';
 import {DeleteAbleApiService} from '../../api/delete-able-api-service';
 import {HttpService} from "../../api/http/http-service";
 import {Product} from "../product";
+import {ApiParser} from "../../api/api-service";
 
-@inject(HttpService)
-export class FrameGlassService extends DeleteAbleApiService<FrameGlass> {
-
-  constructor(httpService: HttpService) {
-    super(httpService, '/frame-glasses', 3000);
-  }
+export class FrameGlassParser implements ApiParser<FrameGlass> {
 
   parseOne(object): FrameGlass {
     let id = object.id;
@@ -20,6 +16,15 @@ export class FrameGlassService extends DeleteAbleApiService<FrameGlass> {
 
   parseArray(array: {_embedded: {"frame-glasses": object[]}}): FrameGlass[] {
     return array._embedded["frame-glasses"].map(object => this.parseOne(object));
+  }
+
+}
+
+@inject(HttpService, FrameGlassParser)
+export class FrameGlassService extends DeleteAbleApiService<FrameGlass> {
+
+  constructor(httpService: HttpService, frameGlassParser) {
+    super(httpService, '/frame-glasses', 3000, frameGlassParser);
   }
 
 }

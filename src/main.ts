@@ -10,7 +10,6 @@ import {UserService} from './api/user-service';
 
 import {PLATFORM} from 'aurelia-pal';
 import * as Bluebird from 'bluebird';
-import {CanvasProductManager} from "./canvas/canvas-product-manager";
 
 import {EventAggregator} from 'aurelia-event-aggregator';
 
@@ -35,7 +34,6 @@ export function configure(aurelia: Aurelia) {
   const httpService = new HttpService(httpClient);
   const authService = new AuthService(auth0, httpService, aurelia.container.get(EventAggregator));
   const userService = new UserService(httpService);
-  const canvasProductManager = new CanvasProductManager();
   authService.initialize();
 
   aurelia.container.registerSingleton(HttpService, () => {
@@ -48,10 +46,6 @@ export function configure(aurelia: Aurelia) {
 
   aurelia.container.registerSingleton(UserService, () => {
     return userService;
-  });
-
-  aurelia.container.registerSingleton(CanvasProductManager, () => {
-    return canvasProductManager;
   });
 
   return aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app')));

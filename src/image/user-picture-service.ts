@@ -3,11 +3,37 @@ import {HttpService} from "../api/http/http-service";
 import {Picture} from "../product/picture";
 import {UserPicture} from "./user-picture";
 import {Page, PagedResponseEntity} from "../api/response/response-entity";
+import {ApiParser} from "../api/api-service";
 
-@inject(HttpService)
+export class UserPictureParser implements ApiParser<UserPicture> {
+
+  parseOne(response: any): UserPicture {
+    return new UserPicture(
+      this.parsePicture(response.picture),
+      response.user
+    );
+  }
+
+  parseArray(array: {_embedded: {userPictures: object[]}}): UserPicture[] {
+    return array._embedded.userPictures
+      .map(object => this.parseOne(object));
+  }
+
+  parsePicture(response: any): Picture {
+    return new Picture(
+      response.name,
+      response.key,
+      response.url
+    );
+  }
+
+}
+
+@inject(HttpService, UserPictureParser)
 export class UserPictureService {
 
-  constructor(private readonly httpService: HttpService){}
+  constructor(private readonly httpService: HttpService,
+              private readonly userPictureParser: UserPictureParser){}
 
   get(page: number = 0, size: number = 10) : Promise<PagedResponseEntity<UserPicture[]>> {
     return new Promise((resolve, reject) => {
@@ -19,7 +45,7 @@ export class UserPictureService {
         .then(success => {
           if (success.statusCode == 200) {
             let response = JSON.parse(success.response);
-            let entities = this.parseArray(response);
+            let entities = this.userPictureParser.parseArray(response);
             let page = this.parsePage(response);
             resolve(new PagedResponseEntity(page, entities));
           } else {
@@ -49,7 +75,7 @@ export class UserPictureService {
             console.log(success);
             if(success.statusCode == 201 || success.statusCode == 200) {
               let response = JSON.parse(success.response);
-              return this.parseUserPicture(response);
+              return this.userPictureParser.parseOne(response);
             } else {
               throw new Error(`Invalid user picture response status [${success.statusCode}]`);
             }
@@ -65,26 +91,11 @@ export class UserPictureService {
       .then(success => {
         if (success.statusCode == 201 || success.statusCode == 200) {
           let response = JSON.parse(success.response);
-          return this.parsePicture(response);
+          return this.userPictureParser.parsePicture(response);
         } else {
           throw new Error(`Invalid form response status [${success.statusCode}]`);
         }
       });
-  }
-
-  private parsePicture(response: any): Picture {
-    return new Picture(
-      response.name,
-      response.key,
-      response.url
-    );
-  }
-
-  private parseUserPicture(response: any) {
-    return new UserPicture(
-      this.parsePicture(response.picture),
-      response.user
-    );
   }
 
   private parsePage(response: any) {
@@ -93,11 +104,6 @@ export class UserPictureService {
       response.page.totalElements,
       response.page.totalPages,
       response.page.number);
-  }
-
-  parseArray(array: {_embedded: {userPictures: object[]}}): UserPicture[] {
-    return array._embedded.userPictures
-      .map(object => this.parseUserPicture(object));
   }
 
 }

@@ -5,10 +5,8 @@ export abstract class ApiService<T> {
 
   constructor(protected readonly httpService: HttpService, 
               protected readonly entityPath: string, 
-              protected readonly timeout: number = 3000) {}
-
-  abstract parseOne(object : {}) : T;
-  abstract parseArray(array : {}) : T[];
+              protected readonly timeout: number = 3000,
+              protected readonly parser: ApiParser<T>) {}
 
   get(page: number = 0, size: number = 10) : Promise<PagedResponseEntity<T[]>> {
     return new Promise((resolve, reject) => {
@@ -20,7 +18,7 @@ export abstract class ApiService<T> {
         .then(success => {
           if (success.statusCode == 200) {
             let response = JSON.parse(success.response);
-            let entities = this.parseArray(response);
+            let entities = this.parser.parseArray(response);
             let page = this.parsePage(response);
             resolve(new PagedResponseEntity(page, entities));
           } else {
@@ -42,7 +40,7 @@ export abstract class ApiService<T> {
         .send()
         .then(success => {
           if (success.statusCode == 200) {
-            resolve(this.parseOne(JSON.parse(success.response)));
+            resolve(this.parser.parseOne(JSON.parse(success.response)));
           } else {
             console.error(success);
             reject(success);
@@ -83,4 +81,9 @@ export abstract class ApiService<T> {
       response.page.totalPages,
       response.page.number);
   }
+}
+
+export interface ApiParser<T> {
+  parseOne(object: any): T;
+  parseArray(array: any): T[];
 }

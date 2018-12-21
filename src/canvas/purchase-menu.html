@@ -1,0 +1,52 @@
+<template>
+  <require from="./frame/frame-selector"></require>
+  <require from="./backboard/backboard-selector"></require>
+  <require from="./picture/picture-selector"></require>
+  <require from="./front-mat/front-mat-selector"></require>
+  <require from="./transaction-summary"></require>
+
+    <div class="row" style="height: 95%; max-height: 95%; margin-left: 15px; margin-right: 15px;">
+      <div class="col-4" style="height: 100%; max-height: 100%; min-height: 100%;">
+        <div class="row" style="height: 50%; max-height: 50%; min-height: 50%;">
+          <div class="card col-12 border" style="padding: 0;">
+            <div class="card-header bg-info text-white">
+              Imagenes
+            </div>
+            <div class="card-body" style="padding: 0; overflow-y: scroll; -webkit-overflow-scrolling: touch;" as-element="picture-selector">
+            </div>
+          </div>
+        </div>
+        <div class="row" style="height: 50%; max-height: 50%; min-height: 50%;">
+          <div class="card col-12 border" style="padding: 0;">
+            <div class="card-header bg-info text-white">
+              Seleccionar Marco
+            </div>
+            <div class="card-body" style="padding: 0; overflow-y: scroll; -webkit-overflow-scrolling: touch;" as-element="frame-selector">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4" style="height: 100%; max-height: 100%; min-height: 100%;">
+        <div class="row" style="height: 50%; max-height: 50%; min-height: 50%;">
+          <div class="card col-12 border" style="padding: 0;">
+            <div class="card-header bg-info text-white">
+              Panel anterior
+            </div>
+            <div class="card-body" style="padding: 0; overflow-y: scroll; -webkit-overflow-scrolling: touch;" as-element="backboard-selector">
+            </div>
+          </div>
+        </div>
+        <div class="row" style="height: 50%; max-height: 50%; min-height: 50%;">
+          <div class="card col-12" style="padding: 0;">
+            <div class="card-header bg-info text-white">
+              Panel posterior
+            </div>
+            <div class="card-body" style="padding: 0; overflow-y: scroll; -webkit-overflow-scrolling: touch;" as-element="front-mat-selector">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4" style="max-height: 100%; padding-right: 0; padding-top: 15px;" as-element="transaction-summary">
+      </div>
+    </div>
+</template>

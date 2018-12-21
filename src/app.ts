@@ -8,7 +8,7 @@ export class App {
   configureRouter(config: RouterConfiguration, router: Router) {
     this.router = router;
     config.map([
-      { route: 'canvas', name: 'canvas', moduleId: PLATFORM.moduleName('canvas/canvas'), nav: false },
+      { route: 'purchase-menu', name: 'purchase-menu', moduleId: PLATFORM.moduleName('canvas/purchase-menu'), nav: false },
       { route: ['', 'home'], name: 'home', moduleId: PLATFORM.moduleName('home') },
       { route: 'callback', name: 'callback', moduleId: PLATFORM.moduleName('api/login-callback'), nav: false },
       { route: 'image-upload', name: 'image-upload', moduleId: PLATFORM.moduleName('image/image-upload-form'), nav: false }

@@ -1,11 +1,10 @@
 import {inject} from 'aurelia-framework';
 import {Error} from "../../error/Error";
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {CanvasProductManager} from "../canvas-product-manager";
 import {UserPictureService} from "../../image/user-picture-service";
 import {UserPicture} from "../../image/user-picture";
 
-@inject(UserPictureService, EventAggregator, CanvasProductManager)
+@inject(UserPictureService, EventAggregator)
 export class PictureSelector {
 
   private working : boolean;
@@ -14,12 +13,7 @@ export class PictureSelector {
   private selectedPicture : UserPicture;
   private error : Error;
 
-  constructor(private service : UserPictureService, private eventAggregator : EventAggregator, private manager : CanvasProductManager) {
-    // this.eventAggregator.subscribe("current-selector-change", selector => {
-    //   if(selector == "picture/picture-selector") {
-    //     this.selectedPicture = this.manager.selectedPicture;
-    //   }
-    // });
+  constructor(private service : UserPictureService, private eventAggregator : EventAggregator) {
   }
 
   created() {
@@ -41,7 +35,6 @@ export class PictureSelector {
     this.eventAggregator.publish("product-selected", picture.picture.url);
     this.eventAggregator.publish("picture-product-selected", picture);
     this.selectedPicture = picture;
-    this.manager.selectedPicture = picture;
   }
 
 }

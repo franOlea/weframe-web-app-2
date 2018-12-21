@@ -3,13 +3,9 @@ import {DeleteAbleApiService} from '../../api/delete-able-api-service';
 import {HttpService} from "../../api/http/http-service";
 import {Product} from "../product";
 import {Picture} from "../picture";
+import {ApiParser} from "../../api/api-service";
 
-@inject(HttpService)
-export class MatTypeService extends DeleteAbleApiService<MatType> {
-
-  constructor(httpService: HttpService) {
-    super(httpService, '/mat-types', 3000);
-  }
+export class MatTypeParser implements ApiParser<MatType> {
 
   parseOne(object): MatType {
     let id = object.id;
@@ -25,6 +21,15 @@ export class MatTypeService extends DeleteAbleApiService<MatType> {
 
   parseArray(array: {_embedded: {"mat-types": object[]}}): MatType[] {
     return array._embedded["mat-types"].map(object => this.parseOne(object));
+  }
+
+}
+
+@inject(HttpService, MatTypeParser)
+export class MatTypeService extends DeleteAbleApiService<MatType> {
+
+  constructor(httpService: HttpService, matTypeParser: MatTypeParser) {
+    super(httpService, '/mat-types', 3000, matTypeParser);
   }
 
 }

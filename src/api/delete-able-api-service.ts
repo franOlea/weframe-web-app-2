@@ -1,10 +1,10 @@
-import { ApiService } from './api-service';
+import {ApiParser, ApiService} from './api-service';
 import { HttpService } from './http/http-service';
 
 export abstract class DeleteAbleApiService<T> extends ApiService<T> {
 
-  constructor(httpService: HttpService, entityPath: string, timeout: number = 3000) {
-    super(httpService, entityPath, timeout);
+  constructor(httpService: HttpService, entityPath: string, timeout: number, apiParser: ApiParser<T>) {
+    super(httpService, entityPath, timeout, apiParser);
   }
 
   remove(id: number) {

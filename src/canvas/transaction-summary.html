@@ -1,0 +1,39 @@
+<template>
+  <div class="card mb-3 ${userPicture && frame && backboard && frontMat ? 'border-info' : 'border-success'}">
+    <div class="card-header">Resumen</div>
+    <div class="card-body" if.bind="userPicture || frame || backboard || frontMat">
+
+      <div if.bind="userPicture">
+        <h5 class="card-title">${userPicture.picture.name}</h5>
+        <hr>
+      </div>
+
+      <div if.bind="frame">
+        <h5 class="card-title">${frame.name}</h5>
+        <p class="card-text">$ ${frame.price}</p>
+        <hr>
+      </div>
+
+      <div if.bind="backboard">
+        <h5 class="card-title">${backboard.name}</h5>
+        <p class="card-text">$ ${frame ? calculatedPrice(frame, backboard.m2Price).toFixed(2) : backboard.m2Price + ' c/m2'}</p>
+        <hr>
+      </div>
+
+      <div if.bind="frontMat">
+        <h5 class="card-title">${frontMat.name}</h5>
+        <p class="card-text">$ ${frame ? calculatedPrice(frame, frontMat.m2Price).toFixed(2) : frontMat.m2Price + ' c/m2'}</p>
+        <hr>
+      </div>
+
+      <div if.bind="userPicture && frame && backboard && frontMat">
+        <h5 class="card-title">Total</h5>
+        <p class="card-text">$ ${(frame.price + calculatedPrice(frame, backboard.m2Price) + calculatedPrice(frame, frontMat.m2Price)).toFixed(2)}</p>
+      </div>
+
+    </div>
+    <div class="card-footer bg-transparent border-success" if.bind="userPicture && frame && backboard && frontMat">
+      <button type="button" class="btn btn-success">Comprar</button>
+    </div>
+  </div>
+</template>

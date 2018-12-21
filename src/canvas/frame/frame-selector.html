@@ -1,6 +1,6 @@
 <template>
   <div class="d-none">${selectedFrame.id}</div>
-  <div class="list-group border border-info rounded-right" style="height: 100%; overflow-y: scroll; -webkit-overflow-scrolling: touch;">
+  <div class="list-group border border-info rounded-right" style="height: 100%;">
     <button type="button" class="list-group-item list-group-item-action frame-selector-button border-0 ${frame.id == selectedFrame.id ? 'active' : ''}" repeat.for="frame of frames" click.delegate="select(frame)">
       <div class="row">
         <div class="col-md-6 vcenter frame-selector-row">
@@ -9,7 +9,7 @@
         <div class="col-md-6 vcenter">
           <h4 class="list-group-item-heading">${frame.name}</h4>
           <p class="list-group-item-text" title="${frame.description}">${frame.description}</p>
-          <p class="list-group-item-text" title="${frame.description}">$ ${frame.price}</p>
+          <p class="list-group-item-text" title="${frame.description}">$ ${frame.price} c/m2</p>
         </div>
       </div>
     </button>
