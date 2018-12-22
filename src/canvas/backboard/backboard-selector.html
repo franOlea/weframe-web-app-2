@@ -3,7 +3,7 @@
   <button type="button" class="list-group-item list-group-item-action backboard-selector-button border-0 ${backboard.id == selectedBackboard.id ? 'active' : ''}" repeat.for="backboard of backboards" click.delegate="select(backboard)">
   <div class="row">
       <div class="col-md-6 vcenter backboard-selector-row">
-        <img src.bind="backboard.picture.url"  alt="${backboard.name}" class="img-reponsive img-rounded backboard-selector-thumbnail vcenter" />
+        <img src="${backboard.picture.url}"  alt="${backboard.name}" class="img-reponsive img-rounded backboard-selector-thumbnail vcenter" />
       </div>
       <div class="col-md-6 vcenter">
         <h4 class="list-group-item-heading">${backboard.name}</h4>

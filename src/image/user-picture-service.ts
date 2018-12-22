@@ -9,6 +9,7 @@ export class UserPictureParser implements ApiParser<UserPicture> {
 
   parseOne(response: any): UserPicture {
     return new UserPicture(
+      response.id,
       this.parsePicture(response.picture),
       response.user
     );
@@ -21,6 +22,7 @@ export class UserPictureParser implements ApiParser<UserPicture> {
 
   parsePicture(response: any): Picture {
     return new Picture(
+      response.id,
       response.name,
       response.key,
       response.url

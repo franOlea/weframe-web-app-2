@@ -11,10 +11,11 @@ export class MatTypeParser implements ApiParser<MatType> {
     let id = object.id;
     let name = object.name;
     let description = object.description;
+    let pictureId = object.picture.id;
     let pictureName = object.picture.name;
     let pictureKey = object.picture.key;
     let pictureUrl = object.picture.url;
-    let picture = new Picture(pictureName, pictureKey, pictureUrl);
+    let picture = new Picture(pictureId, pictureName, pictureKey, pictureUrl);
     let m2Price = object.m2Price;
     return new MatType(id, name, description, picture, m2Price);
   }

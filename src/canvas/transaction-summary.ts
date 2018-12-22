@@ -4,8 +4,9 @@ import {Frame} from "../product/frame/frame-service";
 import {Backboard} from "../product/backboard/backboard-service";
 import {MatType} from "../product/mat-type/mat-type-service";
 import {UserPicture} from "../image/user-picture";
+import {Purchase, PurchaseService} from "../purchase/purchase-service";
 
-@inject(EventAggregator)
+@inject(EventAggregator, PurchaseService)
 export class TransactionSummary {
 
   private userPicture : UserPicture;
@@ -13,7 +14,8 @@ export class TransactionSummary {
   private backboard : Backboard;
   private frontMat : MatType;
 
-  constructor(private readonly listener: EventAggregator) {}
+  constructor(private readonly listener: EventAggregator,
+              private readonly purchaseService: PurchaseService) {}
 
   created() {
     this.listener.subscribe("picture-product-selected", (userPicture : UserPicture) => {
@@ -32,5 +34,19 @@ export class TransactionSummary {
 
   private calculatedPrice(frame : Frame, m2Price : number) : number {
     return (m2Price * (frame.height / 1000) * (frame.length / 1000));
+  }
+
+  private start() {
+    let purchase = new Purchase(
+      null,
+      this.userPicture,
+      this.frame,
+      this.frame.price,
+      this.backboard,
+      this.calculatedPrice(this.frame, this.backboard.m2Price),
+      this.frontMat,
+      this.calculatedPrice(this.frame, this.frontMat.m2Price)
+    );
+    this.purchaseService.post(purchase);
   }
 }

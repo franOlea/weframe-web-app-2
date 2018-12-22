@@ -90,6 +90,7 @@ export class AuthService {
 
   private hasExpiredToken(): boolean {
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    console.log("Token expires at " + expiresAt);
     return new Date().getTime() > expiresAt;
   }
 

@@ -18,26 +18,35 @@ export class PurchaseParser implements ApiParser<Purchase> {
   }
 
   parseOne(object: any): Purchase {
-    return null;
+    return new Purchase(
+      object.id,
+      this.userPictureParser.parseOne(object.userPicture),
+      this.frameParser.parseOne(object.frame),
+      object.framePrice,
+      this.backboardParser.parseOne(object.backboard),
+      object.backboardPrice,
+      this.matTypeParser.parseOne(object.frontMat),
+      object.frontMatPrice
+    );
   }
 
   parseArray(array: any): Purchase[] {
-    return null;
+    return array._embedded.purchases
+      .map(object => this.parseOne(object));
   }
 }
 
 @inject(HttpService, PurchaseParser)
-export class PurchaseServise extends DeleteAbleApiService<Purchase> {
+export class PurchaseService extends DeleteAbleApiService<Purchase> {
 
   constructor(httpService: HttpService, purchaseParser: PurchaseParser) {
     super(httpService, '/purchases', 3000, purchaseParser)
   }
 
-
-
 }
 
 export class Purchase {
+  id: number;
   userPicture: UserPicture;
   frame: Frame;
   framePrice: number;
@@ -45,4 +54,22 @@ export class Purchase {
   backboardPrice: number;
   frontMat: MatType;
   frontMatPrice: number;
+
+  constructor(id: number,
+              userPicture: UserPicture,
+              frame: Frame,
+              framePrice: number,
+              backboard: Backboard,
+              backboardPrice: number,
+              frontMat: MatType,
+              frontMatPrice: number) {
+    this.id = id;
+    this.userPicture = userPicture;
+    this.frame = frame;
+    this.framePrice = framePrice;
+    this.backboard = backboard;
+    this.backboardPrice = backboardPrice;
+    this.frontMat = frontMat;
+    this.frontMatPrice = frontMatPrice;
+  }
 }
