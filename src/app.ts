@@ -9,6 +9,8 @@ export class App {
     this.router = router;
     config.map([
       { route: 'purchase-menu', name: 'purchase-menu', moduleId: PLATFORM.moduleName('canvas/purchase-menu'), nav: false },
+      { route: 'purchase-success', name: 'purchase-success', moduleId: PLATFORM.moduleName('purchase/purchase-success'), nav: false },
+      { route: 'purchase-failure', name: 'purchase-failure', moduleId: PLATFORM.moduleName('purchase/purchase-failure'), nav: false },
       { route: ['', 'home'], name: 'home', moduleId: PLATFORM.moduleName('home') },
       { route: 'callback', name: 'callback', moduleId: PLATFORM.moduleName('api/login-callback'), nav: false },
       { route: 'image-upload', name: 'image-upload', moduleId: PLATFORM.moduleName('image/image-upload-form'), nav: false }

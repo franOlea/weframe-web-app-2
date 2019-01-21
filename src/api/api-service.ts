@@ -53,7 +53,7 @@ export abstract class ApiService<T> {
     })
   }
 
-  post(entity: T) {
+  post(entity: T) : Promise<T> {
     return new Promise((resolve, reject) => {
       this.httpService.request(`${this.entityPath}`)
         .asPost()
@@ -62,7 +62,7 @@ export abstract class ApiService<T> {
         .send()
         .then(success => {
           if (success.statusCode == 201 || success.statusCode == 200) {
-            resolve();
+            resolve(this.parser.parseOne(JSON.parse(success.response)));
           } else {
             console.error(success);
             reject(success);

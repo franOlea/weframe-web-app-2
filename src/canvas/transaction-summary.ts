@@ -47,6 +47,10 @@ export class TransactionSummary {
       this.frontMat,
       this.calculatedPrice(this.frame, this.frontMat.m2Price)
     );
-    this.purchaseService.post(purchase);
+    this.purchaseService.post(purchase).then(success => {
+      window.location.href = success.transactionInitialPoint;
+    }, failure => {
+      console.log(failure);
+    });
   }
 }
