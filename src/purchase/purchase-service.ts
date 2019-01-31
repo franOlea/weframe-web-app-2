@@ -28,7 +28,9 @@ export class PurchaseParser implements ApiParser<Purchase> {
       this.matTypeParser.parseOne(object.frontMat),
       object.frontMatPrice,
       object.transactionId,
-      object.transactionInitialPoint
+      object.transactionInitialPoint,
+      object.stampDatetime,
+      object.status
     );
   }
 
@@ -58,8 +60,10 @@ export class Purchase {
   frontMatPrice: number;
   transactionId: string;
   transactionInitialPoint: string;
+  stampDatetime: number;
+  status: string;
 
-  constructor(id: number, userPicture: UserPicture, frame: Frame, framePrice: number, backboard: Backboard, backboardPrice: number, frontMat: MatType, frontMatPrice: number, transactionId: string = null, transactionInitialPoint: string = null) {
+  constructor(id: number, userPicture: UserPicture, frame: Frame, framePrice: number, backboard: Backboard, backboardPrice: number, frontMat: MatType, frontMatPrice: number, transactionId: string = null, transactionInitialPoint: string = null, stampDatetime: number = null, status: string = null) {
     this.id = id;
     this.userPicture = userPicture;
     this.frame = frame;
@@ -70,5 +74,7 @@ export class Purchase {
     this.frontMatPrice = frontMatPrice;
     this.transactionId = transactionId;
     this.transactionInitialPoint = transactionInitialPoint;
+    this.stampDatetime = stampDatetime;
+    this.status = status;
   }
 }

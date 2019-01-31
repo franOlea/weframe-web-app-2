@@ -5,7 +5,7 @@
     <abt-navbar-collapser>
       <abt-navbar-nav class="mr-auto">
         <abt-navbar-link active="true" href="#">Sobre nosotros</abt-navbar-link>
-        <abt-navbar-link href="#">Arma tu marco</abt-navbar-link>
+        <abt-navbar-link route-href="route: user-purchase-list" if.bind="authenticated">Compras</abt-navbar-link>
         <abt-navbar-link route-href="route: purchase-menu" if.bind="authenticated">Purchase Menu</abt-navbar-link>
         <abt-navbar-link route-href="route: image-upload" if.bind="authenticated">Subir foto</abt-navbar-link>
       </abt-navbar-nav>

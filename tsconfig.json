@@ -9,6 +9,7 @@
     "sourceRoot": "src",
     "sourceMap": true,
     "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "src",
     "skipLibCheck": true,
     "lib": [

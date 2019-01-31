@@ -1,0 +1,78 @@
+<template>
+  <require from="../../date-format"></require>
+  <require from="../../purchase-value-format"></require>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Imagen</th>
+        <th scope="col">Momento de compra</th>
+        <th scope="col">Marco</th>
+        <th scope="col">Panel anterior</th>
+        <th scope="col">Panel posterior</th>
+        <th scope="col">Valor</th>
+        <th scope="col">Estado de compra</th>
+        <th scope="col">Numero de compra</th>
+        <th scope="col"><i class="fas fa-info"></i> Detalles</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr repeat.for="purchase of purchases">
+        <td>${purchase.userPicture.picture.name}</td>
+        <td>${purchase.stampDatetime | dateFormat}</td>
+        <td>${purchase.frame.name}</td>
+        <td>${purchase.backboard.name}</td>
+        <td>${purchase.frontMat.name}</td>
+        <td>${purchase | purchaseValueFormat}</td>
+        <td>${purchase.status}</td>
+        <td>${purchase.id}</td>
+        <td>
+          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#purchaseDetailModal" click.delegate="select(purchase)">
+            <i class="fas fa-info"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div class="modal fade" id="purchaseDetailModal" tabindex="-1" role="dialog" aria-labelledby="purchaseDetailModal" aria-hidden="true" data-keyboard="false" data-backdrop="static">>
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" click.delegate="deselect()"><span aria-hidden="true">&times;</span></button>
+          <div class="row">
+            ${JSON.stringify(selectedPurchase)}
+          </div>
+          <div class="row">
+            <div class="card" style="width: 18rem;">
+              <img src="${selectedPurchase.frame.picture.url}" class="card-img-top" alt="${selectedPurchase.frame.name}">
+              <div class="card-body">
+                <h5 class="card-title">${selectedPurchase.frame.name}</h5>
+              </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+              <img src="${selectedPurchase.backboard.picture.url}" class="card-img-top" alt="${selectedPurchase.backboard.name}">
+              <div class="card-body">
+                <h5 class="card-title">${selectedPurchase.backboard.name}</h5>
+              </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+              <img src="${selectedPurchase.frontMat.picture.url}" class="card-img-top" alt="${selectedPurchase.frontMat.name}">
+              <div class="card-body">
+                <h5 class="card-title">${selectedPurchase.frontMat.name}</h5>
+              </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+              <img src="${selectedPurchase.userPicture.picture.url}" class="card-img-top" alt="${selectedPurchase.userPicture.picture.name}">
+              <div class="card-body">
+                <h5 class="card-title">${selectedPurchase.userPicture.picture.name}</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</template>
