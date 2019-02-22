@@ -13,6 +13,11 @@ export class TransactionSummary {
   private frame : Frame;
   private backboard : Backboard;
   private frontMat : MatType;
+  private streetAddressOne : string;
+  private streetAddressTwo : string;
+  private zipCode : string;
+  private province : string;
+  private locality : string;
 
   constructor(private readonly listener: EventAggregator,
               private readonly purchaseService: PurchaseService) {}
@@ -37,15 +42,19 @@ export class TransactionSummary {
   }
 
   private start() {
-    let purchase = new Purchase(
-      null,
+    let purchase = Purchase.create(
       this.userPicture,
       this.frame,
       this.frame.price,
       this.backboard,
       this.calculatedPrice(this.frame, this.backboard.m2Price),
       this.frontMat,
-      this.calculatedPrice(this.frame, this.frontMat.m2Price)
+      this.calculatedPrice(this.frame, this.frontMat.m2Price),
+      this.streetAddressOne,
+      this.streetAddressTwo,
+      this.zipCode,
+      this.province,
+      this.locality
     );
     this.purchaseService.post(purchase).then(success => {
       window.location.href = success.transactionInitialPoint;

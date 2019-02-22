@@ -30,7 +30,13 @@ export class PurchaseParser implements ApiParser<Purchase> {
       object.transactionId,
       object.transactionInitialPoint,
       object.stampDatetime,
-      object.status
+      object.status,
+      object.transactionStatus,
+      object.streetAddressOne,
+      object.streetAddressTwo,
+      object.zipCode,
+      object.province,
+      object.locality
     );
   }
 
@@ -61,9 +67,21 @@ export class Purchase {
   transactionId: string;
   transactionInitialPoint: string;
   stampDatetime: number;
-  status: string;
+  status: PurchaseStatus;
+  transactionStatus: string;
+  streetAddressOne: string;
+  streetAddressTwo: string;
+  zipCode: string;
+  province: string;
+  locality: string;
 
-  constructor(id: number, userPicture: UserPicture, frame: Frame, framePrice: number, backboard: Backboard, backboardPrice: number, frontMat: MatType, frontMatPrice: number, transactionId: string = null, transactionInitialPoint: string = null, stampDatetime: number = null, status: string = null) {
+  constructor(id: number, userPicture: UserPicture, frame: Frame, framePrice: number,
+              backboard: Backboard, backboardPrice: number, frontMat: MatType,
+              frontMatPrice: number, transactionId: string,
+              transactionInitialPoint: string, stampDatetime: number,
+              status: string, transactionStatus: string,
+              streetAddressOne: string, streetAddressTwo: string, zipCode: string,
+              province: string, locality: string) {
     this.id = id;
     this.userPicture = userPicture;
     this.frame = frame;
@@ -75,6 +93,49 @@ export class Purchase {
     this.transactionId = transactionId;
     this.transactionInitialPoint = transactionInitialPoint;
     this.stampDatetime = stampDatetime;
-    this.status = status;
+    this.status = PurchaseStatus[<string> status];
+    this.transactionStatus = transactionStatus;
+    this.streetAddressOne = streetAddressOne;
+    this.streetAddressTwo = streetAddressTwo;
+    this.zipCode = zipCode;
+    this.province = province;
+    this.locality = locality;
   }
+
+  static create(userPicture: UserPicture, frame: Frame, framePrice: number,
+                backboard: Backboard, backboardPrice: number, frontMat: MatType,
+                frontMatPrice: number, streetAddressOne: string,
+                streetAddressTwo: string, zipCode: string,
+                province: string, locality: string) {
+    return new Purchase(
+      null,
+      userPicture,
+      frame,
+      framePrice,
+      backboard,
+      backboardPrice,
+      frontMat,
+      frontMatPrice,
+      null,
+      null,
+      null,
+      null,
+      null,
+      streetAddressOne,
+      streetAddressTwo,
+      zipCode,
+      province,
+      locality
+    );
+  }
+}
+
+export enum PurchaseStatus {
+  PENDING = "PENDING",
+  MAKING = "MAKING",
+  SHIPPING = "SHIPPING",
+  COMPLETE = "COMPLETE",
+  CANCELLED = "CANCELLED",
+  REJECTED = "REJECTED",
+  ERROR = "ERROR"
 }

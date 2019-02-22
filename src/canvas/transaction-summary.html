@@ -29,6 +29,21 @@
       <div if.bind="userPicture && frame && backboard && frontMat">
         <h5 class="card-title">Total</h5>
         <p class="card-text">$ ${(frame.price + calculatedPrice(frame, backboard.m2Price) + calculatedPrice(frame, frontMat.m2Price)).toFixed(2)}</p>
+        <hr>
+      </div>
+
+      <div if.bind="userPicture && frame && backboard && frontMat">
+        <h5 class="card-title">Envio</h5>
+        <p class="card-text">Direccion</p>
+        <input type="text" value.bind="streetAddressOne" title="Street Address One"/>
+        <br/>
+        <input type="text" value.bind="streetAddressTwo" title="Street Address Two"/>
+        <p class="card-text">Codigo postal</p>
+        <input type="text" value.bind="zipCode" title="Zip Code"/>
+        <p class="card-text">Provincia</p>
+        <input type="text" value.bind="province" title="Province"/>
+        <p class="card-text">Localidad</p>
+        <input type="text" value.bind="locality" title="Locality"/>
       </div>
 
     </div>

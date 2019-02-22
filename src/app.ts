@@ -14,7 +14,8 @@ export class App {
       { route: ['', 'home'], name: 'home', moduleId: PLATFORM.moduleName('home') },
       { route: 'callback', name: 'callback', moduleId: PLATFORM.moduleName('api/login-callback'), nav: false },
       { route: 'image-upload', name: 'image-upload', moduleId: PLATFORM.moduleName('image/image-upload-form'), nav: false },
-      { route: 'user-purchase-list', name: 'user-purchase-list', moduleId: PLATFORM.moduleName('purchase/list/user-purchase-list'), nav: false }
+      { route: 'user-purchase-list', name: 'user-purchase-list', moduleId: PLATFORM.moduleName('purchase/list/user-purchase-list'), nav: false },
+      { route: 'admin-purchase-list', name: 'admin-purchase-list', moduleId: PLATFORM.moduleName('purchase/list/admin-purchase-list'), nav: false }
     ]);
     config.title = 'WeFrame';
     config.mapUnknownRoutes('api/login-callback');
