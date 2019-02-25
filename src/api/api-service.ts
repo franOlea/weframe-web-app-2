@@ -1,7 +1,7 @@
 import { HttpService } from './http/http-service';
 import {Page, PagedResponseEntity} from "./response/response-entity";
 
-export abstract class ApiService<T> {
+export abstract class ApiService<T extends Entity> {
 
   constructor(protected readonly httpService: HttpService, 
               protected readonly entityPath: string, 
@@ -74,6 +74,27 @@ export abstract class ApiService<T> {
     });
   }
 
+  patch(entity: T): Promise<T> {
+    return new Promise((resolve, reject) => {
+      this.httpService.request(`${this.entityPath}/${entity.id}`)
+        .asPatch()
+        .withTimeout(this.timeout)
+        .withContent(entity)
+        .send()
+        .then(success => {
+          if (success.statusCode == 201 || success.statusCode == 200) {
+            resolve(this.parser.parseOne(JSON.parse(success.response)));
+          } else {
+            console.error(success);
+            reject(success);
+          }
+        }, failure => {
+          console.error(failure);
+          reject(failure);
+        });
+    });
+  }
+
   private parsePage(response: any) {
     return new Page(
       response.page.size,
@@ -83,7 +104,16 @@ export abstract class ApiService<T> {
   }
 }
 
-export interface ApiParser<T> {
+export interface ApiParser<T extends Entity> {
   parseOne(object: any): T;
   parseArray(array: any): T[];
+}
+
+export abstract class Entity {
+  id: number;
+
+  constructor(id: number) {
+    this.id = id;
+  }
+
 }

@@ -43,7 +43,7 @@ export class Frame extends Product {
   picture: Picture;
   price: number;
 
-  constructor(id: string, name: string, description: string, height: number, length: number, picture: Picture, price: number) {
+  constructor(id: number, name: string, description: string, height: number, length: number, picture: Picture, price: number) {
     super(id, name, description);
     this.height = height;
     this.length = length;

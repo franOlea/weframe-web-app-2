@@ -39,7 +39,7 @@ export class MatType extends Product {
   picture: Picture;
   m2Price: number;
 
-  constructor(id: string, name: string, description: string, picture: Picture, m2Price: number) {
+  constructor(id: number, name: string, description: string, picture: Picture, m2Price: number) {
     super(id, name, description);
     this.picture = picture;
     this.m2Price = m2Price;

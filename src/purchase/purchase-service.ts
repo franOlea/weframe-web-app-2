@@ -5,7 +5,7 @@ import {Backboard, BackboardParser} from "../product/backboard/backboard-service
 import {MatType, MatTypeParser} from "../product/mat-type/mat-type-service";
 import {HttpService} from "../api/http/http-service";
 import {DeleteAbleApiService} from "../api/delete-able-api-service";
-import {ApiParser} from "../api/api-service";
+import {ApiParser, Entity} from "../api/api-service";
 import {UserPictureParser} from "../image/user-picture-service";
 
 @inject(FrameParser, BackboardParser, MatTypeParser, UserPictureParser)
@@ -36,7 +36,8 @@ export class PurchaseParser implements ApiParser<Purchase> {
       object.streetAddressTwo,
       object.zipCode,
       object.province,
-      object.locality
+      object.locality,
+      object.user
     );
   }
 
@@ -55,8 +56,7 @@ export class PurchaseService extends DeleteAbleApiService<Purchase> {
 
 }
 
-export class Purchase {
-  id: number;
+export class Purchase extends Entity {
   userPicture: UserPicture;
   frame: Frame;
   framePrice: number;
@@ -74,6 +74,7 @@ export class Purchase {
   zipCode: string;
   province: string;
   locality: string;
+  user: string;
 
   constructor(id: number, userPicture: UserPicture, frame: Frame, framePrice: number,
               backboard: Backboard, backboardPrice: number, frontMat: MatType,
@@ -81,8 +82,8 @@ export class Purchase {
               transactionInitialPoint: string, stampDatetime: number,
               status: string, transactionStatus: string,
               streetAddressOne: string, streetAddressTwo: string, zipCode: string,
-              province: string, locality: string) {
-    this.id = id;
+              province: string, locality: string, user: string) {
+    super(id);
     this.userPicture = userPicture;
     this.frame = frame;
     this.framePrice = framePrice;
@@ -100,6 +101,7 @@ export class Purchase {
     this.zipCode = zipCode;
     this.province = province;
     this.locality = locality;
+    this.user = user;
   }
 
   static create(userPicture: UserPicture, frame: Frame, framePrice: number,
@@ -125,7 +127,8 @@ export class Purchase {
       streetAddressTwo,
       zipCode,
       province,
-      locality
+      locality,
+      null
     );
   }
 }

@@ -53,4 +53,15 @@ export class AdminPurchaseList {
     this.selectedPurchase = null;
   }
 
+  private purchaseStatusChanged(event) {
+    console.log(event);
+    this.service.patch(event).then(success => {
+      console.log("success");
+      console.log(success);
+    }, failure => {
+      console.log("failure");
+      console.log(failure);
+    })
+  }
+
 }

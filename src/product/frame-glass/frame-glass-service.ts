@@ -32,7 +32,7 @@ export class FrameGlassService extends DeleteAbleApiService<FrameGlass> {
 export class FrameGlass extends Product {
   m2Price: number;
 
-  constructor(id: string, name: string, description: string, m2Price: number) {
+  constructor(id: number, name: string, description: string, m2Price: number) {
     super(id, name, description);
     this.m2Price = m2Price;
   }

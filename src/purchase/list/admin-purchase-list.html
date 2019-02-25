@@ -5,7 +5,7 @@
   <table class="table">
     <thead>
     <tr>
-      <th scope="col">Imagen</th>
+      <th scope="col">Cliente</th>
       <th scope="col">Momento de compra</th>
       <th scope="col">Marco</th>
       <th scope="col">Panel anterior</th>
@@ -19,7 +19,7 @@
     </thead>
     <tbody>
     <tr repeat.for="purchase of purchases">
-      <td>${purchase.userPicture.picture.name}</td>
+      <td>${purchase.user}</td>
       <td>${purchase.stampDatetime | dateFormat}</td>
       <td>${purchase.frame.name}</td>
       <td>${purchase.backboard.name}</td>
@@ -27,17 +27,16 @@
       <td>${purchase | purchaseValueFormat}</td>
       <td>${purchase.transactionStatus}</td>
       <td>
-        <abt-dropdown value.bind="selectedProduct" type="secondary" title="${purchase.status}">
-          <abt-dropdown-item>PENDING</abt-dropdown-item>
-          <abt-dropdown-item>MAKING</abt-dropdown-item>
-          <abt-dropdown-item>SHIPPING</abt-dropdown-item>
-          <abt-dropdown-item>COMPLETE</abt-dropdown-item>
-          <abt-dropdown-item>CANCELLED</abt-dropdown-item>
-          <abt-dropdown-item>REJECTED</abt-dropdown-item>
-          <abt-dropdown-item>ERROR</abt-dropdown-item>
-        </abt-dropdown>
+        <select class="form-control" value.bind="purchase.status" change.delegate="purchaseStatusChanged(purchase)">
+          <option>PENDING</option>
+          <option>MAKING</option>
+          <option>SHIPPING</option>
+          <option>COMPLETE</option>
+          <option>CANCELLED</option>
+          <option>REJECTED</option>
+          <option>ERROR</option>
+        </select>
       </td>
-      <!--<td>${purchase.status}</td>-->
       <td>${purchase.id}</td>
       <td>
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#purchaseDetailModal" click.delegate="select(purchase)">
