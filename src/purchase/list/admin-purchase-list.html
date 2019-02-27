@@ -2,6 +2,16 @@
   <require from="../../date-format"></require>
   <require from="../../purchase-value-format"></require>
 
+  <select class="form-control" value.bind="statusFilter" change.delegate="statusFilterChanged(statusFilter)">
+    <option>PENDING</option>
+    <option>MAKING</option>
+    <option>SHIPPING</option>
+    <option>COMPLETE</option>
+    <option>CANCELLED</option>
+    <option>REJECTED</option>
+    <option>ERROR</option>
+  </select>
+
   <table class="table">
     <thead>
     <tr>
@@ -96,7 +106,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>

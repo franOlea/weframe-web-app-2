@@ -95,7 +95,7 @@ export abstract class ApiService<T extends Entity> {
     });
   }
 
-  private parsePage(response: any) {
+  protected parsePage(response: any) {
     return new Page(
       response.page.size,
       response.page.totalElements,

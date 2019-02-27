@@ -7,6 +7,7 @@ import {HttpService} from "../api/http/http-service";
 import {DeleteAbleApiService} from "../api/delete-able-api-service";
 import {ApiParser, Entity} from "../api/api-service";
 import {UserPictureParser} from "../image/user-picture-service";
+import {PagedResponseEntity} from "../api/response/response-entity";
 
 @inject(FrameParser, BackboardParser, MatTypeParser, UserPictureParser)
 export class PurchaseParser implements ApiParser<Purchase> {
@@ -52,6 +53,30 @@ export class PurchaseService extends DeleteAbleApiService<Purchase> {
 
   constructor(httpService: HttpService, purchaseParser: PurchaseParser) {
     super(httpService, '/purchases', 3000, purchaseParser)
+  }
+
+  getByStatus(page: number = 0, size: number = 10, status: string) : Promise<PagedResponseEntity<Purchase[]>> {
+    return new Promise((resolve, reject) => {
+      this.httpService.request(`${this.entityPath}/admin`)
+        .asGet()
+        .withTimeout(this.timeout)
+        .withParams({page: page, size: size, status: status})
+        .send()
+        .then(success => {
+          if (success.statusCode == 200) {
+            let response = JSON.parse(success.response);
+            let entities = this.parser.parseArray(response);
+            let page = this.parsePage(response);
+            resolve(new PagedResponseEntity(page, entities));
+          } else {
+            console.error(success);
+            reject(success);
+          }
+        }, failure => {
+          console.error(failure);
+          reject(failure);
+        });
+    });
   }
 
 }

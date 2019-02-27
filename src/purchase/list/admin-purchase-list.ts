@@ -14,6 +14,7 @@ export class AdminPurchaseList {
   private hasPrevious : boolean = false;
   private hasMore : boolean = false;
   private currentPage : number;
+  private statusFilter : string;
 
   constructor(private readonly service: PurchaseService){
   }
@@ -22,11 +23,11 @@ export class AdminPurchaseList {
     this.updatePurchaseList(0, AdminPurchaseList.PAGE_SIZE);
   }
 
-  private updatePurchaseList(page : number = 0, size : number = AdminPurchaseList.PAGE_SIZE) : void {
+  private updatePurchaseList(page : number, size : number, status : string = null) : void {
     this.working = true;
-    this.service.get(page, size).then(success => {
+    this.service.getByStatus(page, size, status).then(success => {
       console.log(success);
-      this.purchases = success.entity;
+      this.purchases = success.entity == null ? [] : success.entity;
       this.currentPage = success.page.pageNumber;
       this.hasPrevious = success.page.pageNumber > 0;
       this.hasMore = success.page.pageNumber < success.page.totalPages - 1;
@@ -38,11 +39,11 @@ export class AdminPurchaseList {
   }
 
   private loadNext() {
-    this.updatePurchaseList(++this.currentPage);
+    this.updatePurchaseList(++this.currentPage, AdminPurchaseList.PAGE_SIZE, this.statusFilter);
   }
 
   private loadPrevious() {
-    this.updatePurchaseList(--this.currentPage);
+    this.updatePurchaseList(--this.currentPage, AdminPurchaseList.PAGE_SIZE, this.statusFilter);
   }
 
   private select(purchase : Purchase) {
@@ -62,6 +63,11 @@ export class AdminPurchaseList {
       console.log("failure");
       console.log(failure);
     })
+  }
+
+  private statusFilterChanged(statusFilter : string) {
+    this.currentPage = 0;
+    this.updatePurchaseList(this.currentPage, AdminPurchaseList.PAGE_SIZE, statusFilter);
   }
 
 }
