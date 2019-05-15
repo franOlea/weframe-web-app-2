@@ -11,3 +11,6 @@
 **/debug.log
 **/npm-debug.log
 **/lerna-debug.log
+
+/weframe-web-server/node_modules
+/weframe-web-server/public
