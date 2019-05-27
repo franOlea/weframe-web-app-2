@@ -26,6 +26,7 @@ export class AuthService {
   handleAuthentication(): Promise<void> {
     return new Promise((resolve) => {
       this.auth0.parseHash((err, authResult) => {
+        console.log(authResult);
         if (authResult && authResult.accessToken && authResult.idToken) {
           console.log(authResult);
           this.persistToken(authResult);

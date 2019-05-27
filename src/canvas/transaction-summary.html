@@ -1,7 +1,7 @@
 <template>
-  <div class="card mb-3 ${userPicture && frame && backboard && frontMat ? 'border-info' : 'border-success'}">
+  <div class="card mb-3 ${userPicture && frame && backboard && frontMat ? 'border-info' : 'border-success'}" style="height: 100%;">
     <div class="card-header">Resumen</div>
-    <div class="card-body" if.bind="userPicture || frame || backboard || frontMat">
+    <div class="card-body" if.bind="userPicture || frame || backboard || frontMat" style="height: 100%; overflow-y: scroll;">
 
       <div if.bind="userPicture">
         <h5 class="card-title">${userPicture.picture.name}</h5>

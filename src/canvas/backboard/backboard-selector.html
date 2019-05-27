@@ -1,7 +1,19 @@
 <template>
   <div class="d-none">${selectedBackboard.id}</div>
   <button type="button" class="list-group-item list-group-item-action backboard-selector-button border-0 ${backboard.id == selectedBackboard.id ? 'active' : ''}" repeat.for="backboard of backboards" click.delegate="select(backboard)">
-  <div class="row">
+    <div class="row">
+      <div class="col-md-6 vcenter backboard-selector-row">
+        <img src="${backboard.picture.url}"  alt="${backboard.name}" class="img-reponsive img-rounded backboard-selector-thumbnail vcenter" />
+      </div>
+      <div class="col-md-6 vcenter">
+        <h4 class="list-group-item-heading">${backboard.name}</h4>
+        <p class="list-group-item-text" title="${backboard.description}">${backboard.description}</p>
+        <p class="list-group-item-text" title="${backboard.description}">$ ${backboard.m2Price} c/m2</p>
+      </div>
+    </div>
+  </button>
+  <button type="button" class="list-group-item list-group-item-action backboard-selector-button border-0 ${backboard.id == selectedBackboard.id ? 'active' : ''}" repeat.for="backboard of backboards" click.delegate="select(backboard)">
+    <div class="row">
       <div class="col-md-6 vcenter backboard-selector-row">
         <img src="${backboard.picture.url}"  alt="${backboard.name}" class="img-reponsive img-rounded backboard-selector-thumbnail vcenter" />
       </div>
@@ -16,8 +28,6 @@
   <style>
     .backboard-selector-button {
       cursor: pointer;
-      min-height: 40%;
-      max-height: 40%;
       overflow: visible;
     }
 
