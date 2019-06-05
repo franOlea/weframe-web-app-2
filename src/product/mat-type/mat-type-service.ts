@@ -21,7 +21,12 @@ export class MatTypeParser implements ApiParser<MatType> {
   }
 
   parseArray(array: {_embedded: {"mat-types": object[]}}): MatType[] {
-    return array._embedded["mat-types"].map(object => this.parseOne(object));
+    if(array._embedded && array._embedded["mat-types"]) {
+      return array._embedded["mat-types"]
+        .map(object => this.parseOne(object));
+    } else {
+      return [];
+    }
   }
 
 }
@@ -30,7 +35,7 @@ export class MatTypeParser implements ApiParser<MatType> {
 export class MatTypeService extends DeleteAbleApiService<MatType> {
 
   constructor(httpService: HttpService, matTypeParser: MatTypeParser) {
-    super(httpService, '/mat-types', 3000, matTypeParser);
+    super(httpService, '/mat-types', 10000, matTypeParser);
   }
 
 }

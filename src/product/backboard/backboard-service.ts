@@ -21,7 +21,12 @@ export class BackboardParser implements ApiParser<Backboard> {
   }
 
   parseArray(array: {_embedded: {backboards: object[]}}): Backboard[] {
-    return array._embedded.backboards.map(object => this.parseOne(object));
+    if(array._embedded && array._embedded.backboards) {
+      return array._embedded.backboards
+        .map(object => this.parseOne(object));
+    } else {
+      return [];
+    }
   }
 
 }
@@ -30,7 +35,7 @@ export class BackboardParser implements ApiParser<Backboard> {
 export class BackboardService extends DeleteAbleApiService<Backboard> {
 
   constructor(httpService: HttpService, backboardParser: BackboardParser) {
-    super(httpService, "/backboards", 3000, backboardParser);
+    super(httpService, "/backboards", 10000, backboardParser);
   }
 
 }

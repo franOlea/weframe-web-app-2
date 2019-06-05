@@ -31,9 +31,11 @@ export class AdminPurchaseList {
       this.currentPage = success.page.pageNumber;
       this.hasPrevious = success.page.pageNumber > 0;
       this.hasMore = success.page.pageNumber < success.page.totalPages - 1;
-      this.working = false;
     }, failure => {
       this.error = new Error('Ups', 'Parece que el sistema no response, por favor intenta nuevamente mas tarde.');
+    }).then(() => {
+      this.working = false;
+    }, () => {
       this.working = false;
     });
   }
@@ -54,14 +56,16 @@ export class AdminPurchaseList {
     this.selectedPurchase = null;
   }
 
-  private purchaseStatusChanged(event) {
-    console.log(event);
-    this.service.patch(event).then(success => {
-      console.log("success");
-      console.log(success);
+  private purchaseStatusChanged(purchase, event : Event) {
+    let select = event.srcElement as HTMLSelectElement;
+    event.srcElement.setAttribute("disabled", null);
+    this.service.patch(purchase).then(success => {
     }, failure => {
-      console.log("failure");
-      console.log(failure);
+      this.error = new Error('Ups', 'Parece que el sistema no response, por favor intenta nuevamente mas tarde.');
+    }).then(() => {
+      event.srcElement.removeAttribute("disabled");
+    }, () => {
+      event.srcElement.removeAttribute("disabled");
     })
   }
 

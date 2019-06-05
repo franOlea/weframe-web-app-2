@@ -1,6 +1,5 @@
 import {Aurelia} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-http-client';
-import * as auth0 from 'auth0-js';
 
 import environment from './environment';
 
@@ -12,6 +11,7 @@ import {PLATFORM} from 'aurelia-pal';
 import * as Bluebird from 'bluebird';
 
 import {EventAggregator} from 'aurelia-event-aggregator';
+import {WebAuth} from "auth0-js";
 
 // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
 Bluebird.config({ warnings: { wForgottenReturn: false } });
@@ -36,6 +36,10 @@ export function configure(aurelia: Aurelia) {
   const userService = new UserService(httpService);
   authService.initialize();
 
+  aurelia.container.registerSingleton(WebAuth, () => {
+    return auth0;
+  });
+
   aurelia.container.registerSingleton(HttpService, () => {
     return httpService;
   });
@@ -54,8 +58,8 @@ export function configure(aurelia: Aurelia) {
 
 
 
-function getAuth0(): auth0.WebAuth {
-  return new auth0.WebAuth({
+function getAuth0(): WebAuth {
+  return new WebAuth({
     domain: environment.auth0Domain,
     clientID: environment.auth0ClientID,
     redirectUri: environment.auth0RedirectUri,

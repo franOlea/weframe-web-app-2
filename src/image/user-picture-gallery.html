@@ -1,13 +1,24 @@
 <template>
   <require from="./user-picture-to-url"></require>
-  <button class="btn btn-lg btn-primary" id="upload-button" type="submit" click.trigger="download()">Bajar</button>
-  <div>
-    <ul>
-      <li repeat.for="userPicture of userPictures">
-        <img src.bind="userPicture | userPictureToUrl" />
-        <h3>${userPicture.picture.name}</h3>
-        <p>${userPicture.picture.key}</p>
-      </li>
-    </ul>
+  <require from="./user-picture-thumbnail"></require>
+  <button class="btn btn-lg btn-outline-primary" type="submit" click.trigger="download()" disabled.bind="loading">
+    <span if.bind="loading"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Cargando...</span>
+    <span if.bind="!loading"><i class="fas fa-sync-alt"></i></span>
+  </button>
+  <div class="row" style="height: 90%; overflow-y: scroll">
+    <div class="col-4 user-picture-card" repeat.for="userPicture of userPictures">
+      <div class="card" style="width: 18rem;">
+        <user-picture-thumbnail
+            user-picture.bind="userPicture"
+            user-pictures.bind="userPictures">
+        </user-picture-thumbnail>
+      </div>
+    </div>
   </div>
+
+  <style>
+    .user-picture-card {
+      padding-bottom: 15px;
+    }
+  </style>
 </template>

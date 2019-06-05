@@ -20,7 +20,6 @@ export class AuthService {
     console.log("Loging out.");
     this.deleteToken();
     this.listener.onUnauthenticated();
-    location.reload(true);
   }
 
   handleAuthentication(): Promise<void> {

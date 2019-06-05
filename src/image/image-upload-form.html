@@ -1,29 +1,29 @@
 <template>
   <require from="./blob-to-url"></require>
   <require from="./file-list-to-array"></require>
-  <require from="./user-picture-gallery"></require>
-
-  <div id="image-preview-div" style="display: none">
-    <label for="imageFile">Selected image:</label>
-    <br>
-    <img id="preview-img" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+  <div class="form-group" style="height: 20%;">
+    <h1>Subir imagen</h1>
+    <div class="custom-file">
+      <input type="file" class="custom-file-input" name="file" id="imageFile" required accept=".jpg" files.bind="selectedFiles" lang="es">
+      <label class="custom-file-label" for="imageFile">Click aqui para deleccionar Archivo</label>
+    </div>
   </div>
-
-  <div class="form-group">
-    <input type="file" name="file" id="imageFile" required accept=".jpg" files.bind="selectedFiles">
-  </div>
-
-  <div>
-    <ul>
-      <li repeat.for="file of selectedFiles | fileListToArray">
-        <img src.bind="file | blobToUrl" />
-        <h3>${file.name}: ${file.type} ${file.size / 1000} kb</h3>
+  <div style="height: 80%; overflow-y: scroll;">
+    <div class="row" repeat.for="file of selectedFiles | fileListToArray">
+      <div class="col-6">
+        <img src.bind="file | blobToUrl" class="card-img-top">
+      </div>
+      <div class="col-6">
+        <h3>${file.name}</h3>
+        <h3>${file.type}</h3>
+        <h3>${(file.size / 1024 / 1024).toFixed(2)} mb</h3>
         <p>Last Modified: ${file.lastModifiedDate}</p>
-      </li>
-    </ul>
+        <button class.bind="loading ? 'btn btn-lg btn-outline-success' : 'btn btn-lg btn-success'" type="submit" click.trigger="upload()" disabled.bind="loading || success">
+          <span if.bind="loading"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Subiendo...</span>
+          <span if.bind="!loading && !success && uploadedFiles != selectedFiles">Subir</span>
+          <span if.bind="success">Listo! <i class="fas fa-check"></i></span>
+        </button>
+      </div>
+    </div>
   </div>
-
-  <button class="btn btn-lg btn-primary" id="upload-button" type="submit" click.trigger="upload()">Subir</button>
-
-  <user-picture-gallery></user-picture-gallery>
 </template>

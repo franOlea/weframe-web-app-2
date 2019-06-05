@@ -23,7 +23,12 @@ export class FrameParser implements ApiParser<Frame> {
   }
 
   parseArray(array: {_embedded: {frames: object[]}}): Frame[] {
-    return array._embedded.frames.map(object => this.parseOne(object));
+    if(array._embedded && array._embedded.frames) {
+      return array._embedded.frames
+        .map(object => this.parseOne(object));
+    } else {
+      return [];
+    }
   }
 
 }
@@ -32,7 +37,7 @@ export class FrameParser implements ApiParser<Frame> {
 export class FrameService extends DeleteAbleApiService<Frame> {
 
   constructor(httpService: HttpService, frameParser: FrameParser) {
-      super(httpService, '/frames', 3000, frameParser);
+      super(httpService, '/frames', 10000, frameParser);
   }
 
 }

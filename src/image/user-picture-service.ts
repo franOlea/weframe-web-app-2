@@ -16,8 +16,12 @@ export class UserPictureParser implements ApiParser<UserPicture> {
   }
 
   parseArray(array: {_embedded: {userPictures: object[]}}): UserPicture[] {
-    return array._embedded.userPictures
-      .map(object => this.parseOne(object));
+    if(array._embedded && array._embedded.userPictures) {
+      return array._embedded.userPictures
+        .map(object => this.parseOne(object));
+    } else {
+      return [];
+    }
   }
 
   parsePicture(response: any): Picture {
@@ -41,7 +45,7 @@ export class UserPictureService {
     return new Promise((resolve, reject) => {
       this.httpService.request("/user-pictures")
         .asGet()
-        .withTimeout(3000)
+        .withTimeout(10000)
         .withParams({page: page, size: size})
         .send()
         .then(success => {
@@ -70,18 +74,38 @@ export class UserPictureService {
     return this.uploadForm(form).then(picture => {
       console.log(picture);
       return this.httpService.request("/user-pictures")
-          .asPost()
-          .withContent(picture)
-          .send()
-          .then(success => {
-            console.log(success);
-            if(success.statusCode == 201 || success.statusCode == 200) {
-              let response = JSON.parse(success.response);
-              return this.userPictureParser.parseOne(response);
-            } else {
-              throw new Error(`Invalid user picture response status [${success.statusCode}]`);
-            }
-          });
+        .asPost()
+        .withContent(picture)
+        .send()
+        .then(success => {
+          console.log(success);
+          if(success.statusCode == 201 || success.statusCode == 200) {
+            let response = JSON.parse(success.response);
+            return this.userPictureParser.parseOne(response);
+          } else {
+            throw new Error(`Invalid user picture response status [${success.statusCode}]`);
+          }
+        });
+    });
+  }
+
+  delete(id: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.httpService.request("/user-pictures/" + id)
+        .asDelete()
+        .withTimeout(10000)
+        .send()
+        .then(success => {
+          if (success.statusCode == 200) {
+            resolve();
+          } else {
+            console.error(success);
+            reject();
+          }
+        }, failure => {
+          console.error(failure);
+          reject();
+        });
     });
   }
 

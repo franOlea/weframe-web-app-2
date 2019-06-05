@@ -15,7 +15,12 @@ export class FrameGlassParser implements ApiParser<FrameGlass> {
   }
 
   parseArray(array: {_embedded: {"frame-glasses": object[]}}): FrameGlass[] {
-    return array._embedded["frame-glasses"].map(object => this.parseOne(object));
+    if(array._embedded && array._embedded["frame-glasses"]) {
+      return array._embedded["frame-glasses"]
+        .map(object => this.parseOne(object));
+    } else {
+      return [];
+    }
   }
 
 }
@@ -24,7 +29,7 @@ export class FrameGlassParser implements ApiParser<FrameGlass> {
 export class FrameGlassService extends DeleteAbleApiService<FrameGlass> {
 
   constructor(httpService: HttpService, frameGlassParser) {
-    super(httpService, '/frame-glasses', 3000, frameGlassParser);
+    super(httpService, '/frame-glasses', 10000, frameGlassParser);
   }
 
 }

@@ -1,0 +1,12 @@
+<template bindable="userPicture" bindable="userPictures">
+  <require from="./user-picture-to-url"></require>
+    <img src.bind="userPicture | userPictureToUrl" class="card-img-top">
+    <div class="card-body">
+      <h3>${userPicture.picture.name}</h3>
+      <p>${userPicture.picture.key}</p>
+      <button class="btn btn-lg btn-warning" type="submit" click.trigger="delete()" disabled.bind="loading">
+        <span if.bind="loading"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Borrando...</span>
+        <span if.bind="!loading">Borrar</span>
+      </button>
+    </div>
+</template>

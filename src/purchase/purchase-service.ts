@@ -42,9 +42,13 @@ export class PurchaseParser implements ApiParser<Purchase> {
     );
   }
 
-  parseArray(array: any): Purchase[] {
-    return array._embedded.purchases
-      .map(object => this.parseOne(object));
+  parseArray(array: {_embedded: {purchases: object[]}}): Purchase[] {
+    if(array._embedded && array._embedded.purchases) {
+      return array._embedded.purchases
+        .map(object => this.parseOne(object));
+    } else {
+      return [];
+    }
   }
 }
 
@@ -52,7 +56,7 @@ export class PurchaseParser implements ApiParser<Purchase> {
 export class PurchaseService extends DeleteAbleApiService<Purchase> {
 
   constructor(httpService: HttpService, purchaseParser: PurchaseParser) {
-    super(httpService, '/purchases', 3000, purchaseParser)
+    super(httpService, '/purchases', 20000, purchaseParser)
   }
 
   getByStatus(page: number = 0, size: number = 10, status: string) : Promise<PagedResponseEntity<Purchase[]>> {

@@ -5,16 +5,28 @@ import {UserPictureService} from "./user-picture-service";
 export class ImageUploadForm {
 
   private selectedFiles : File[];
+  private loading : boolean = false;
+  private success : boolean = false;
+  private uploadedFiles : File[];
 
   constructor(private readonly userPictureService: UserPictureService){}
 
   upload() {
-    this.userPictureService.upload(this.selectedFiles[0]).then(success => {
-      console.log("success");
-      console.log(success);
-    }, failure => {
-      console.log(failure);
-    });
+    if(!this.loading) {
+      this.success = false;
+      this.loading = true;
+      this.userPictureService.upload(this.selectedFiles[0]).then(success => {
+        console.log("success");
+        this.uploadedFiles = this.selectedFiles;
+        this.success = true;
+        console.log(success);
+      }, failure => {
+        console.log(failure);
+      }).then(
+        () => this.loading = false,
+        () => this.loading = false);
+    }
+
   }
 
 }

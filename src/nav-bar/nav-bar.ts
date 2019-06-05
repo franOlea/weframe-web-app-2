@@ -2,16 +2,20 @@ import { inject } from 'aurelia-framework';
 import { UserService } from '../api/user-service';
 import { AuthService } from '../api/auth/auth-service';
 import { EventAggregator } from 'aurelia-event-aggregator';
+import { Router } from 'aurelia-router';
 
-@inject(UserService, AuthService, EventAggregator)
+@inject(UserService, AuthService, EventAggregator, Router)
 export class NavBar {
 
   private authenticated: boolean;
-  private user;
+  private user: string;
+  private admin: boolean;
+
 
   constructor(private readonly userService: UserService, 
               private readonly authService: AuthService,
-              private readonly eventAggregator: EventAggregator) {
+              private readonly eventAggregator: EventAggregator,
+              private readonly router: Router) {
     this.eventAggregator.subscribe("auth-state-change-event", event => {
       this.checkAuthenticationState();
     });
@@ -25,6 +29,7 @@ export class NavBar {
     if (this.isAuthenticated()) {
       this.authenticated = true;
       this.getCurrentUser();
+      this.getUserRole();
     } else {
       this.authenticated = false;
       this.user = null;
@@ -37,6 +42,8 @@ export class NavBar {
 
   logout(): void {
     this.authService.logout();
+    this.router.navigate("home");
+    location.reload(true);
   }
 
   private isAuthenticated(): boolean {
@@ -44,14 +51,11 @@ export class NavBar {
   }
 
   getCurrentUser(): void {
-    this.userService.getCurrentUserData().then(
-      success => {
-        this.user = success;
-        console.log(this.user);
-      },
-      failure => {
-        console.error(failure);
-    });
+    this.user = this.userService.getUserName();
+  }
+
+  private getUserRole() {
+    this.admin = this.userService.getUserRole() == "ROLE_ADMIN";
   }
 
 }

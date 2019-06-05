@@ -7,7 +7,7 @@ import environment from "../../environment";
 @inject("HttpClient")
 export class HttpService implements AuthListener {
 
-  private token: string;
+  private _token: string;
 
   constructor(private httpClient: HttpClient) {
     this.httpClient = this.createUnauthenticatedClient();
@@ -18,8 +18,8 @@ export class HttpService implements AuthListener {
     return this.httpClient.createRequest(path)
       .withInterceptor({
         request(request) {
-          if(_self.token != null) {
-            request.headers.add('Authorization', `Bearer ${_self.token}`);
+          if(_self._token != null) {
+            request.headers.add('Authorization', `Bearer ${_self._token}`);
           }
           return request;
         }
@@ -33,15 +33,20 @@ export class HttpService implements AuthListener {
   }
 
   onAuthenticated(token: string): void {
-    this.token = token;
+    this._token = token;
   }
 
   onUnauthenticated(): void {
-    this.token = null;
+    this._token = null;
   }
 
   isAuthenticated(): boolean {
-    return this.token != null;
+    return this._token != null;
+  }
+
+
+  get token(): string {
+    return this._token;
   }
 
   protected authenticationChanged(authChange) {
@@ -69,4 +74,5 @@ export class HttpService implements AuthListener {
         configuration.withHeader('Authorization', `Bearer ${accessToken}`);
       });
   }
+
 }

@@ -5,14 +5,25 @@ import {UserPicture} from "./user-picture";
 @inject(UserPictureService)
 export class UserPictureGallery {
   private userPictures : UserPicture[];
+  private loading : boolean = false;
 
   constructor(private readonly userPictureService : UserPictureService){}
 
-  download() {
-    this.userPictureService.get(0, 10).then(success => {
-      this.userPictures = success.entity;
-    }, failure => {
-      console.error(failure);
-    });
+  created() {
+    this.download();
   }
+
+  download() {
+    if(!this.loading) {
+      this.loading = true;
+      this.userPictureService.get(0, 10).then(success => {
+        this.userPictures = success.entity;
+      }, failure => {
+        console.error(failure);
+      }).then(
+        () => this.loading = false,
+        () => this.loading = false);
+    }
+  }
+
 }

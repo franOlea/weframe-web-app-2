@@ -18,6 +18,7 @@ export class TransactionSummary {
   private zipCode : string;
   private province : string;
   private locality : string;
+  private loading : boolean = false;
 
   constructor(private readonly listener: EventAggregator,
               private readonly purchaseService: PurchaseService) {}
@@ -42,24 +43,27 @@ export class TransactionSummary {
   }
 
   private start() {
-    let purchase = Purchase.create(
-      this.userPicture,
-      this.frame,
-      this.frame.price,
-      this.backboard,
-      this.calculatedPrice(this.frame, this.backboard.m2Price),
-      this.frontMat,
-      this.calculatedPrice(this.frame, this.frontMat.m2Price),
-      this.streetAddressOne,
-      this.streetAddressTwo,
-      this.zipCode,
-      this.province,
-      this.locality
-    );
-    this.purchaseService.post(purchase).then(success => {
-      window.location.href = success.transactionInitialPoint;
-    }, failure => {
-      console.log(failure);
-    });
+    if(!this.loading) {
+      this.loading = true;
+      let purchase = Purchase.create(
+        this.userPicture,
+        this.frame,
+        this.frame.price,
+        this.backboard,
+        this.calculatedPrice(this.frame, this.backboard.m2Price),
+        this.frontMat,
+        this.calculatedPrice(this.frame, this.frontMat.m2Price),
+        this.streetAddressOne,
+        this.streetAddressTwo,
+        this.zipCode,
+        this.province,
+        this.locality
+      );
+      this.purchaseService.post(purchase).then(success => {
+        window.location.href = success.transactionInitialPoint;
+      }, failure => {
+        console.log(failure);
+      }).then(event => this.loading = false);
+    }
   }
 }

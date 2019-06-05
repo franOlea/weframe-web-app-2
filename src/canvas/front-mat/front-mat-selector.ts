@@ -16,7 +16,6 @@ export class FrontMatSelector {
   }
 
   created() {
-    console.log("created");
     this.updateMatTypeList();
   }
 

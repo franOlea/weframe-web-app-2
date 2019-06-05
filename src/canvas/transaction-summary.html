@@ -48,7 +48,10 @@
 
     </div>
     <div class="card-footer bg-transparent border-success" if.bind="userPicture && frame && backboard && frontMat">
-      <button type="button" class="btn btn-success" click.delegate="start()">Listo</button>
+      <button class="btn btn-success" type="button" click.delegate="start()" disabled.bind="loading">
+        <span if.bind="loading"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Loading...</span>
+        <span if.bind="!loading">Listo</span>
+      </button>
     </div>
   </div>
 </template>

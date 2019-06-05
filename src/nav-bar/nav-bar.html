@@ -1,16 +1,19 @@
 <template>
   <abt-navbar expand-size="lg" navbar-color-type="dark" background-color-type="primary">
-    <abt-navbar-brand>WeFrame</abt-navbar-brand>
+    <abt-navbar-brand  route-href="route: home">WeFrame</abt-navbar-brand>
     <abt-navbar-toggler></abt-navbar-toggler>
     <abt-navbar-collapser>
       <abt-navbar-nav class="mr-auto">
-        <abt-navbar-link active="true" href="#">Sobre nosotros</abt-navbar-link>
-        <abt-navbar-link route-href="route: user-purchase-list" if.bind="authenticated">Compras</abt-navbar-link>
-        <abt-navbar-link route-href="route: admin-purchase-list" if.bind="authenticated">Ventas</abt-navbar-link>
-        <abt-navbar-link route-href="route: purchase-menu" if.bind="authenticated">Purchase Menu</abt-navbar-link>
-        <abt-navbar-link route-href="route: image-upload" if.bind="authenticated">Subir foto</abt-navbar-link>
+        <abt-navbar-link route-href="route: about-us">Sobre nosotros</abt-navbar-link>
+        <abt-navbar-link route-href="route: user-purchase-list" if.bind="authenticated && !admin">Compras</abt-navbar-link>
+        <abt-navbar-link route-href="route: admin-purchase-list" if.bind="authenticated && admin">Ventas</abt-navbar-link>
+        <abt-navbar-link route-href="route: purchase-menu" if.bind="authenticated && !admin">Purchase Menu</abt-navbar-link>
+        <abt-navbar-link route-href="route: image-upload" if.bind="authenticated && !admin">Fotos</abt-navbar-link>
       </abt-navbar-nav>
       <abt-button class="btn btn-secondary my-2 my-sm-0" click.call="login()" if.bind="!authenticated">Ingresar</abt-button>
+      <span class="navbar-text" if.bind="authenticated && user" style="padding-right: 1rem;">
+        ${user}
+      </span>
       <abt-button class="btn btn-warning my-2 my-sm-0" click.call="logout()" if.bind="authenticated">Salir</abt-button>
     </abt-navbar-collapser>
   </abt-navbar>

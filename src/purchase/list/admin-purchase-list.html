@@ -1,18 +1,18 @@
 <template>
   <require from="../../date-format"></require>
   <require from="../../purchase-value-format"></require>
-
-  <select class="form-control" value.bind="statusFilter" change.delegate="statusFilterChanged(statusFilter)">
-    <option>PENDING</option>
-    <option>MAKING</option>
-    <option>SHIPPING</option>
-    <option>COMPLETE</option>
-    <option>CANCELLED</option>
-    <option>REJECTED</option>
-    <option>ERROR</option>
-  </select>
-
-  <table class="table">
+  <div class="text-center" if.bind="working">
+    <div class="spinner-grow" style="width: 30rem; height: 30rem;" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div class="alert alert-danger" role="alert" if.bind="!working && error">
+    <strong>${error.title}</strong> ${error.message}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" click.trigger="created()">
+      <span aria-hidden="true"><i class="fas fa-sync-alt"></i></span>
+    </button>
+  </div>
+  <table class="table" if.bind="!working">
     <thead>
     <tr>
       <th scope="col">Cliente</th>
@@ -37,13 +37,14 @@
       <td>${purchase | purchaseValueFormat}</td>
       <td>${purchase.transactionStatus}</td>
       <td>
-        <select class="form-control" value.bind="purchase.status" change.delegate="purchaseStatusChanged(purchase)">
+        <select class="form-control" value.bind="purchase.status" change.delegate="purchaseStatusChanged(purchase, $event)">
           <option>PENDING</option>
           <option>MAKING</option>
           <option>SHIPPING</option>
           <option>COMPLETE</option>
           <option>CANCELLED</option>
           <option>REJECTED</option>
+          <option>ERROR</option>
           <option>ERROR</option>
         </select>
       </td>
@@ -57,7 +58,7 @@
     </tbody>
   </table>
 
-  <nav aria-label="Admin purchase list">
+  <nav aria-label="Admin purchase list" if.bind="!working">
     <ul class="pagination justify-content-center">
       <li class="page-item ${hasPrevious ? '' : 'disabled'}">
         <button class="page-link" class="page-link" click.delegate="loadPrevious()">Previous</button>
