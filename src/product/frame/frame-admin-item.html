@@ -1,0 +1,40 @@
+<template>
+  <div class="list-group-item list-group-item-action frame-selector-button border-0 ${frame.id == selectedBackboard.id ? 'active' : ''}">
+    <div class="row">
+      <div class="col-md-6 vcenter">
+        <img src="${frame.picture.url}"  alt="${frame.name}" class="img-reponsive img-rounded frame-selector-thumbnail vcenter" />
+      </div>
+      <div class="col-md-6 vcenter">
+        <h4 class="list-group-item-heading">${frame.name}</h4>
+        <p class="list-group-item-text" title="${frame.description}">${frame.description}</p>
+        <p class="list-group-item-text" title="${frame.height}">${frame.height} cm</p>
+        <p class="list-group-item-text" title="${frame.length}">${frame.length} cm</p>
+        <p class="list-group-item-text" title="${frame.description}">$ ${frame.price}</p>
+        <button class="btn btn-danger" type="submit" click.trigger="delete()" disabled.bind="working">
+          <span if.bind="working"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Eliminando...</span>
+          <span if.bind="!working">Eliminar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .frame-selector-button {
+      cursor: pointer;
+      overflow: visible;
+    }
+
+    .frame-selector-thumbnail {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  </style>
+</template>

@@ -1,0 +1,38 @@
+<template>
+  <div class="list-group-item list-group-item-action mat-type-selector-button border-0 ${matType.id == selectedBackboard.id ? 'active' : ''}">
+    <div class="row">
+      <div class="col-md-6 vcenter">
+        <img src="${matType.picture.url}"  alt="${matType.name}" class="img-reponsive img-rounded mat-type-selector-thumbnail vcenter" />
+      </div>
+      <div class="col-md-6 vcenter">
+        <h4 class="list-group-item-heading">${matType.name}</h4>
+        <p class="list-group-item-text" title="${matType.description}">${matType.description}</p>
+        <p class="list-group-item-text" title="${matType.description}">$ ${matType.m2Price} c/m2</p>
+        <button class="btn btn-danger" type="submit" click.trigger="delete()" disabled.bind="working">
+          <span if.bind="working"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Eliminando...</span>
+          <span if.bind="!working">Eliminar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .mat-type-selector-button {
+      cursor: pointer;
+      overflow: visible;
+    }
+
+    .mat-type-selector-thumbnail {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  </style>
+</template>

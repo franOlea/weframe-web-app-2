@@ -27,7 +27,6 @@ export class AuthService {
       this.auth0.parseHash((err, authResult) => {
         console.log(authResult);
         if (authResult && authResult.accessToken && authResult.idToken) {
-          console.log(authResult);
           this.persistToken(authResult);
           this.listener.onAuthenticated(authResult.accessToken);
           console.log("Login successful for user " + authResult.idTokenPayload.sub);

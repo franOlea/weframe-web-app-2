@@ -1,0 +1,92 @@
+<template>
+  <require from="./frame-admin-item"></require>
+    <div class="row" style="padding-top: 20px; height: 100%; max-height: 100%;">
+
+      <div class="col-4 offset-1" style="height: 100%; max-height: 100%;">
+        <h2 style="height: 50px;">Nuevo Marco</h2>
+        <form style="max-height: calc(100% - 56px); overflow-y: scroll;">
+          <div class="form-group">
+            <label for="adminProductName">Nombre</label>
+            <input type="text" class="form-control" id="adminProductName" aria-describedby="adminProductNameHelp" placeholder="Ingresar nombre.." value.bind="formName">
+            <small id="adminProductNameHelp" class="form-text text-muted">No puede quedar vacio.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="adminProductDescription">Descripción</label>
+            <textarea class="form-control" id="adminProductDescription" rows="3" aria-describedby="adminProductDescriptionHelp" placeholder="Ingresar descripción.." value.bind="formDescription"></textarea>
+            <small id="adminProductDescriptionHelp" class="form-text text-muted">No puede quedar vacio.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="adminProductHeight">Altura (cm)</label>
+            <div class="input-group">
+              <input type="number" class="form-control" id="adminProductHeight" aria-describedby="adminProductHeightHelp" placeholder="Ingresar altura.." value.bind="formHeight"/>
+              <div class="input-group-append">
+                <div class="input-group-text">cm</div>
+              </div>
+            </div>
+            <small id="adminProductHeightHelp" class="form-text text-muted">No puede quedar vacio.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="adminProductLength">Altura (cm)</label>
+            <div class="input-group">
+              <input type="number" class="form-control" id="adminProductLength" aria-describedby="adminProductLengthHelp" placeholder="Ingresar largo.." value.bind="formLength"/>
+              <div class="input-group-append">
+                <div class="input-group-text">cm</div>
+              </div>
+            </div>
+            <small id="adminProductLengthHelp" class="form-text text-muted">No puede quedar vacio.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="adminProductPrice">Precio (M2)</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">$</div>
+              </div>
+              <input type="number" class="form-control" id="adminProductPrice" aria-describedby="adminProductPriceHelp" placeholder="Ingresar precio.." value.bind="formPrice"/>
+            </div>
+            <small id="adminProductPriceHelp" class="form-text text-muted">No puede quedar vacio.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="adminProductPicture">Seleccionar Archivo</label>
+            <input type="file" class="form-control-file" id="adminProductPicture" accept=".jpg" value.bind="formFile" files.bind="formFiles">
+          </div>
+
+          <div class="form-group" if.bind="formError">
+            <div class="alert alert-danger">
+              <strong>${formError.title}</strong> ${formError.message}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <button class.bind="loading ? 'btn btn-lg btn-outline-success' : 'btn btn-lg btn-success'" type="submit" click.trigger="uploadForm()" disabled.bind="formWorking || formSuccess">
+              <span if.bind="formWorking"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Subiendo...</span>
+              <span if.bind="!formWorking && !formSuccess">Subir</span>
+              <span if.bind="formSuccess">Listo! <i class="fas fa-check"></i></span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-6" style="height: 100%; max-height: 100%;">
+        <h2 style="height: 50px;">Marcos</h2>
+        <div class="form-group" if.bind="listError" style="height: 50px;">
+          <div class="alert alert-danger">
+            <strong>${listError.title}</strong> ${listError.message}
+          </div>
+        </div>
+        <div class="text-center" if.bind="listWorking">
+          <div class="spinner-grow" style="width: 30rem; height: 30rem;" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="list-group border" style="max-height: calc(100% - 106px - 1rem); overflow-y: scroll;">
+          <frame-admin-item repeat.for="frame of frames" frame.bind="frame" frames.bind="frames"></frame-admin-item>
+        </div>
+      </div>
+
+    </div>
+</template>

@@ -1,0 +1,35 @@
+<template>
+  <div class="list-group-item list-group-item-action frame-glass-selector-button border-0 ${frameGlass.id == selectedBackboard.id ? 'active' : ''}">
+    <div class="row">
+      <div class="col-md-12 vcenter">
+        <h4 class="list-group-item-heading">${frameGlass.name}</h4>
+        <p class="list-group-item-text" title="${frameGlass.description}">${frameGlass.description}</p>
+        <p class="list-group-item-text" title="${frameGlass.description}">$ ${frameGlass.m2Price} c/m2</p>
+        <button class="btn btn-danger" type="submit" click.trigger="delete()" disabled.bind="working">
+          <span if.bind="working"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Eliminando...</span>
+          <span if.bind="!working">Eliminar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .frame-glass-selector-button {
+      cursor: pointer;
+      overflow: visible;
+    }
+
+    .frame-glass-selector-thumbnail {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  </style>
+</template>

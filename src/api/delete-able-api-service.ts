@@ -14,7 +14,7 @@ export abstract class DeleteAbleApiService<T extends Entity> extends ApiService<
         .withTimeout(this.timeout)
         .send()
         .then(success => {
-          if(success.statusCode == 200) {
+          if(success.statusCode == 200 || success.statusCode == 204) {
             resolve();
           } else {
             reject(success);
