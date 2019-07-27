@@ -65,13 +65,13 @@ export class UserPictureService {
     });
   }
 
-  upload(pictureFile: File): Promise<UserPicture> {
+  upload(pictureFile: File, progressCallback: (progressEvent) => any): Promise<UserPicture> {
     let form = new FormData();
     form.append("file", pictureFile);
     let fileNameParts = pictureFile.name.split(".");
     form.append("name", fileNameParts[0]);
     form.append("formatName", fileNameParts[fileNameParts.length-1]);
-    return this.uploadForm(form).then(picture => {
+    return this.uploadForm(form, progressCallback).then(picture => {
       console.log(picture);
       return this.httpService.request("/user-pictures")
         .asPost()
@@ -109,10 +109,11 @@ export class UserPictureService {
     });
   }
 
-  private uploadForm(form: FormData): Promise<Picture> {
+  private uploadForm(form: FormData, progressCallback: (progressEvent) => any): Promise<Picture> {
     return this.httpService.request("/pictures")
       .asPost()
       .withContent(form)
+      .withProgressCallback(progressCallback)
       .send()
       .then(success => {
         if (success.statusCode == 201 || success.statusCode == 200) {

@@ -5,8 +5,8 @@
     <span if.bind="loading"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Cargando...</span>
     <span if.bind="!loading"><i class="fas fa-sync-alt"></i></span>
   </button>
-  <div class="row" style="height: 90%; overflow-y: scroll">
-    <div class="col-4 user-picture-card" repeat.for="userPicture of userPictures">
+  <div class="row" style="height: 90%; overflow-y: scroll; overflow-x: hidden;">
+    <div class="col-3 user-picture-card" repeat.for="userPicture of userPictures" style="max-width: inherit !important;">
       <div class="card" style="width: 18rem;">
         <user-picture-thumbnail
             user-picture.bind="userPicture"

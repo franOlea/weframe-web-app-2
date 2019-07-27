@@ -18,6 +18,9 @@
         <h3>${file.type}</h3>
         <h3>${(file.size / 1024 / 1024).toFixed(2)} mb</h3>
         <p>Last Modified: ${file.lastModifiedDate}</p>
+        <div class="progress" if.bind="loading">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow.bind="progress" aria-valuemin="0" aria-valuemax.bind="uploadSize" css="width: ${progressPercentage}%"></div>
+        </div>
         <button class.bind="loading ? 'btn btn-lg btn-outline-success' : 'btn btn-lg btn-success'" type="submit" click.trigger="upload()" disabled.bind="loading || success">
           <span if.bind="loading"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Subiendo...</span>
           <span if.bind="!loading && !success && uploadedFiles != selectedFiles">Subir</span>

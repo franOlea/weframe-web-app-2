@@ -5,7 +5,7 @@ export abstract class ApiService<T extends Entity> {
 
   constructor(protected readonly httpService: HttpService, 
               protected readonly entityPath: string, 
-              protected readonly timeout: number = 10000,
+              protected readonly timeout: number = 60000,
               protected readonly parser: ApiParser<T>) {}
 
   get(page: number = 0, size: number = 10) : Promise<PagedResponseEntity<T[]>> {
