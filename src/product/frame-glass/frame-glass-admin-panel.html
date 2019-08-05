@@ -34,6 +34,9 @@
         </div>
 
         <div class="form-group">
+          <div class="progress" if.bind="formWorking">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow.bind="formProgress" aria-valuemin="0" aria-valuemax.bind="formUploadSize" css="width: ${formProgressPercentage}%"></div>
+          </div>
           <button class.bind="loading ? 'btn btn-lg btn-outline-success' : 'btn btn-lg btn-success'" type="submit" click.trigger="uploadForm()" disabled.bind="formWorking || formSuccess">
             <span if.bind="formWorking"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Subiendo...</span>
             <span if.bind="!formWorking && !formSuccess">Subir</span>

@@ -12,6 +12,10 @@ export class FrameGlassAdminPanel {
   private formDescription: string;
   private formPrice: number;
 
+  private formProgress : number = 0;
+  private formUploadSize : number = 1;
+  private formProgressPercentage : number = 0;
+
   private listError: Error;
   private listWorking: boolean = false;
   private frameGlasses: FrameGlass[];
@@ -39,9 +43,17 @@ export class FrameGlassAdminPanel {
     this.formWorking = true;
     this.formError = null;
     let frameGlass = new FrameGlass(null, this.formName, this.formDescription, this.formPrice);
-    this.matTypeService.post(frameGlass).then(success => {
+    let progressCallback = (progressEvent: ProgressEvent) => {
+      this.formUploadSize = progressEvent.total;
+      this.formProgress = progressEvent.loaded;
+      this.formProgressPercentage = Math.round((this.formProgress - this.formUploadSize) / this.formUploadSize * 100) + 100;
+    };
+    this.matTypeService.post(frameGlass, progressCallback).then(success => {
       this.formWorking = false;
       this.formSuccess = true;
+      this.formProgress = 0;
+      this.formUploadSize = 1;
+      this.formProgressPercentage = 0;
       this.downloadList();
       window.setTimeout(() => {
         this.clearForm();

@@ -17,6 +17,10 @@ export class FrameAdminPanel {
   private formLength: number;
   private formPrice: number;
 
+  private formProgress : number = 0;
+  private formUploadSize : number = 1;
+  private formProgressPercentage : number = 0;
+
   private listError: Error;
   private listWorking: boolean = false;
   private frames: Frame[];
@@ -50,11 +54,19 @@ export class FrameAdminPanel {
     this.formError = null;
     let file = this.formFiles[0];
     const _self = this;
-    this.pictureService.upload(file).then(picture => {
+    let progressCallback = (progressEvent: ProgressEvent) => {
+      this.formUploadSize = progressEvent.total;
+      this.formProgress = progressEvent.loaded;
+      this.formProgressPercentage = Math.round((this.formProgress - this.formUploadSize) / this.formUploadSize * 100) + 100;
+    };
+    this.pictureService.upload(file, progressCallback).then(picture => {
       let frame = new Frame(null, this.formName, this.formDescription, this.formHeight, this.formLength, picture, this.formPrice);
       _self.frameService.post(frame).then(success => {
         _self.formWorking = false;
         _self.formSuccess = true;
+        _self.formProgress = 0;
+        _self.formUploadSize = 1;
+        _self.formProgressPercentage = 0;
         _self.downloadList();
         window.setTimeout(() => {
           this.clearForm();

@@ -8,9 +8,9 @@ export abstract class ApiService<T extends Entity> {
               protected readonly timeout: number = 60000,
               protected readonly parser: ApiParser<T>) {}
 
-  get(page: number = 0, size: number = 10) : Promise<PagedResponseEntity<T[]>> {
+  get(page: number = 0, size: number = 10, progressCallback: (progressEvent) => any = (_) => {}) : Promise<PagedResponseEntity<T[]>> {
     return new Promise((resolve, reject) => {
-      this.httpService.request(this.entityPath)
+      this.httpService.request(this.entityPath, progressCallback)
         .asGet()
         .withTimeout(this.timeout)
         .withParams({page: page, size: size})
@@ -32,9 +32,9 @@ export abstract class ApiService<T extends Entity> {
     });
   }
 
-  getById(id: number) : Promise<T> {
+  getById(id: number, progressCallback: (progressEvent) => any = (_) => {}) : Promise<T> {
     return new Promise((resolve, reject) => {
-      this.httpService.request(`${this.entityPath}/${id}`)
+      this.httpService.request(`${this.entityPath}/${id}`, progressCallback)
         .asGet()
         .withTimeout(this.timeout)
         .send()
@@ -53,9 +53,9 @@ export abstract class ApiService<T extends Entity> {
     })
   }
 
-  post(entity: T) : Promise<T> {
+  post(entity: T, progressCallback: (progressEvent) => any = (_) => {}) : Promise<T> {
     return new Promise((resolve, reject) => {
-      this.httpService.request(`${this.entityPath}`)
+      this.httpService.request(`${this.entityPath}`, progressCallback)
         .asPost()
         .withTimeout(this.timeout)
         .withContent(entity)
@@ -74,9 +74,9 @@ export abstract class ApiService<T extends Entity> {
     });
   }
 
-  patch(entity: T): Promise<T> {
+  patch(entity: T, progressCallback: (progressEvent) => any = (_) => {}): Promise<T> {
     return new Promise((resolve, reject) => {
-      this.httpService.request(`${this.entityPath}/${entity.id}`)
+      this.httpService.request(`${this.entityPath}/${entity.id}`, progressCallback)
         .asPatch()
         .withTimeout(this.timeout)
         .withContent(entity)

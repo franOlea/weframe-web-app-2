@@ -15,6 +15,10 @@ export class BackboardAdminPanel {
   private formDescription: string;
   private formPrice: number;
 
+  private formProgress : number = 0;
+  private formUploadSize : number = 1;
+  private formProgressPercentage : number = 0;
+
   private listError: Error;
   private listWorking: boolean = false;
   private backboards: Backboard[];
@@ -46,11 +50,19 @@ export class BackboardAdminPanel {
     this.formError = null;
     let file = this.formFiles[0];
     const _self = this;
-    this.pictureService.upload(file).then(picture => {
+    let progressCallback = (progressEvent: ProgressEvent) => {
+      this.formUploadSize = progressEvent.total;
+      this.formProgress = progressEvent.loaded;
+      this.formProgressPercentage = Math.round((this.formProgress - this.formUploadSize) / this.formUploadSize * 100) + 100;
+    };
+    this.pictureService.upload(file, progressCallback).then(picture => {
       let backboard = new Backboard(null, this.formName, this.formDescription, picture, this.formPrice);
       _self.backboardService.post(backboard).then(success => {
         _self.formWorking = false;
         _self.formSuccess = true;
+        _self.formProgress = 0;
+        _self.formUploadSize = 1;
+        _self.formProgressPercentage = 0;
         _self.downloadList();
         window.setTimeout(() => {
           this.clearForm();

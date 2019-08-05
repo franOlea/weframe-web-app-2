@@ -13,7 +13,7 @@ export class HttpService implements AuthListener {
     this.httpClient = this.createUnauthenticatedClient();
   }
 
-  request(path): RequestBuilder {
+  request(path, progressCallback: (progressEvent) => any = (_) => {}): RequestBuilder {
     const _self = this;
     return this.httpClient.createRequest(path)
       .withInterceptor({
@@ -29,7 +29,8 @@ export class HttpService implements AuthListener {
             console.log(`${response.requestMessage.method} ${response.requestMessage.buildFullUrl()} ${response.statusCode}`);
             return response;
           }
-      });
+      })
+      .withProgressCallback(progressCallback);
   }
 
   onAuthenticated(token: string): void {

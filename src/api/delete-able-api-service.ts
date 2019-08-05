@@ -7,9 +7,9 @@ export abstract class DeleteAbleApiService<T extends Entity> extends ApiService<
     super(httpService, entityPath, timeout, apiParser);
   }
 
-  remove(id: number) {
+  remove(id: number, progressCallback: (progressEvent) => any = (_) => {}) {
     return new Promise((resolve, reject) => {
-      this.httpService.request(`${this.entityPath}/${id}`)
+      this.httpService.request(`${this.entityPath}/${id}`, progressCallback)
         .asDelete()
         .withTimeout(this.timeout)
         .send()
