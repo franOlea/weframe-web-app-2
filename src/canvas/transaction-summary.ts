@@ -39,7 +39,7 @@ export class TransactionSummary {
   }
 
   private calculatedPrice(frame : Frame, m2Price : number) : number {
-    return (m2Price * (frame.height / 1000) * (frame.length / 1000));
+    return (m2Price * (frame.height / 100) * (frame.length / 100));
   }
 
   private start() {
