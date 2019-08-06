@@ -40,6 +40,17 @@
     </tbody>
   </table>
 
+  <nav aria-label="Admin purchase list" if.bind="!working">
+    <ul class="pagination justify-content-center">
+      <li class="page-item ${hasPrevious ? '' : 'disabled'}">
+        <button class="page-link" class="page-link" click.delegate="loadPrevious()">Previous</button>
+      </li>
+      <li class="page-item ${hasMore ? '' : 'disabled'}">
+        <button class="page-link" class="page-link" click.delegate="loadNext()">Next</button>
+      </li>
+    </ul>
+  </nav>
+
   <!-- Modal -->
   <div class="modal fade" id="purchaseDetailModal" tabindex="-1" role="dialog" aria-labelledby="purchaseDetailModal" aria-hidden="true" data-keyboard="false" data-backdrop="static">>
     <div class="modal-dialog modal-lg">
@@ -47,7 +58,9 @@
         <div class="modal-body">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" click.delegate="deselect()"><span aria-hidden="true">&times;</span></button>
           <div class="row">
-            ${JSON.stringify(selectedPurchase)}
+            <button type="button" class="btn btn-info" click.trigger="download()" disabled.bind="downloading">
+              Descargar imagen
+            </button>
           </div>
           <div class="row">
             <div class="card" style="width: 18rem;">

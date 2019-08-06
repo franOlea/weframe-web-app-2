@@ -18,7 +18,7 @@ export class BackboardSelector {
     this.updateBackboardList();
   }
 
-  private updateBackboardList(page : number = 0, size : number = 10) : void {
+  private updateBackboardList(page : number = 0, size : number = 20) : void {
     this.working = true;
     this.service.get(page, size).then(success => {
       this.backboards = success.entity;

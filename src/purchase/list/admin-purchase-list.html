@@ -6,6 +6,16 @@
       <span class="sr-only">Loading...</span>
     </div>
   </div>
+  <select class="form-control" value.bind="statusFilter" change.delegate="updatePurchaseList(currentPage, AdminPurchaseList.PAGE_SIZE, statusFilter)" disabled.bind="working">
+    <option>-</option>
+    <option>PENDING</option>
+    <option>MAKING</option>
+    <option>SHIPPING</option>
+    <option>COMPLETE</option>
+    <option>CANCELLED</option>
+    <option>REJECTED</option>
+    <option>ERROR</option>
+  </select>
   <div class="alert alert-danger" role="alert" if.bind="!working && error">
     <strong>${error.title}</strong> ${error.message}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close" click.trigger="created()">

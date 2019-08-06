@@ -20,7 +20,7 @@ export class PictureSelector {
     this.updateUserPictureList();
   }
 
-  private updateUserPictureList(page : number = 0, size : number = 10) : void {
+  private updateUserPictureList(page : number = 0, size : number = 20) : void {
     this.working = true;
     this.service.get(page, size).then(success => {
       this.userPictures = success.entity;

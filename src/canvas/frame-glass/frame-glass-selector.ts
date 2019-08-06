@@ -19,7 +19,7 @@ export class FrameGlassSelector {
     this.updateFrameGlassList();
   }
 
-  private updateFrameGlassList(page : number = 0, size : number = 10) : void {
+  private updateFrameGlassList(page : number = 0, size : number = 20) : void {
     this.working = true;
     this.service.get(page, size).then(success => {
       this.frameGlasses = success.entity;

@@ -6,7 +6,7 @@ import {PictureService} from "../../image/picture-service";
 @inject(PurchaseService, PictureService)
 export class AdminPurchaseList {
 
-  private static readonly PAGE_SIZE = 1;
+  private static readonly PAGE_SIZE = 20;
 
   private working : boolean;
   private downloading: boolean = false;
@@ -26,9 +26,11 @@ export class AdminPurchaseList {
   }
 
   private updatePurchaseList(page : number, size : number, status : string = null) : void {
+    if(status == "-") {
+      status = null;
+    }
     this.working = true;
     this.service.getByStatus(page, size, status).then(success => {
-      console.log(success);
       this.purchases = success.entity == null ? [] : success.entity;
       this.currentPage = success.page.pageNumber;
       this.hasPrevious = success.page.pageNumber > 0;

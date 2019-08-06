@@ -19,7 +19,7 @@ export class FrontMatSelector {
     this.updateMatTypeList();
   }
 
-  private updateMatTypeList(page : number = 0, size : number = 10) : void {
+  private updateMatTypeList(page : number = 0, size : number = 20) : void {
     this.working = true;
     this.service.get(page, size).then(success => {
       this.matTypes = success.entity;

@@ -19,7 +19,7 @@ export class FrameSelector {
     this.updateFrameList();
   }
 
-  private updateFrameList(page : number = 0, size : number = 10) : void {
+  private updateFrameList(page : number = 0, size : number = 20) : void {
     this.working = true;
     this.service.get(page, size).then(success => {
       this.frames = success.entity;

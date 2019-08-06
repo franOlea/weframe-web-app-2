@@ -8,7 +8,7 @@ export abstract class ApiService<T extends Entity> {
               protected readonly timeout: number = 60000,
               protected readonly parser: ApiParser<T>) {}
 
-  get(page: number = 0, size: number = 10, progressCallback: (progressEvent) => any = (_) => {}) : Promise<PagedResponseEntity<T[]>> {
+  get(page: number = 0, size: number = 20, progressCallback: (progressEvent) => any = (_) => {}) : Promise<PagedResponseEntity<T[]>> {
     return new Promise((resolve, reject) => {
       this.httpService.request(this.entityPath, progressCallback)
         .asGet()
