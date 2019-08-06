@@ -3,6 +3,7 @@
   <require from="./backboard/backboard-selector"></require>
   <require from="./picture/picture-selector"></require>
   <require from="./front-mat/front-mat-selector"></require>
+  <require from="./frame-glass/frame-glass-selector"></require>
   <require from="./transaction-summary"></require>
 
     <div class="row" style="height: 100%; max-height: 100%; margin-right: 15px;">
@@ -46,7 +47,20 @@
           </div>
         </div>
       </div>
-      <div class="col-4" style="max-height: 100%; padding-right: 0; padding-top: 15px;" as-element="transaction-summary">
+      <div class="col-4" style="height: 100%; max-height: 100%; min-height: 100%;">
+        <div class="row" style="height: 50%; max-height: 50%; min-height: 50%;">
+          <div class="card col-12 border" style="padding: 0; height: 100%;">
+            <div class="card-header bg-info text-white">
+              Pantalla
+            </div>
+            <div class="card-body" style="padding: 0; overflow-y: scroll; -webkit-overflow-scrolling: touch;" as-element="frame-glass-selector">
+            </div>
+          </div>
+        </div>
+        <div class="row" style="height: 50%; max-height: 50%; min-height: 50%;">
+          <div class="col-12" style="max-height: 100%; padding-right: 0; padding-top: 15px;" as-element="transaction-summary">
+          </div>
+        </div>
       </div>
     </div>
 </template>

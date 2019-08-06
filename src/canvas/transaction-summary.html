@@ -26,13 +26,19 @@
         <hr>
       </div>
 
-      <div if.bind="userPicture && frame && backboard && frontMat">
-        <h5 class="card-title">Total</h5>
-        <p class="card-text">$ ${(frame.price + calculatedPrice(frame, backboard.m2Price) + calculatedPrice(frame, frontMat.m2Price)).toFixed(2)}</p>
+      <div if.bind="frameGlass">
+        <h5 class="card-title">${frameGlass.name}</h5>
+        <p class="card-text">$ ${frame ? calculatedPrice(frame, frameGlass.m2Price).toFixed(2) : frameGlass.m2Price + ' c/m2'}</p>
         <hr>
       </div>
 
-      <div if.bind="userPicture && frame && backboard && frontMat">
+      <div if.bind="userPicture && frame && backboard && frontMat && frameGlass">
+        <h5 class="card-title">Total</h5>
+        <p class="card-text">$ ${(frame.price + calculatedPrice(frame, backboard.m2Price) + calculatedPrice(frame, frontMat.m2Price) + calculatedPrice(frame, frameGlass.m2Price)).toFixed(2)}</p>
+        <hr>
+      </div>
+
+      <div if.bind="userPicture && frame && backboard && frontMat && frameGlass">
         <h5 class="card-title">Envio</h5>
         <p class="card-text">Direccion</p>
         <input type="text" value.bind="streetAddressOne" title="Street Address One"/>
@@ -48,7 +54,7 @@
 
     </div>
     <div class="card-footer bg-transparent border-success" if.bind="userPicture && frame && backboard && frontMat">
-      <button class="btn btn-success" type="button" click.delegate="start()" disabled.bind="loading">
+      <button class="btn btn-success" type="button" click.delegate="start()" disabled.bind="loading || !(userPicture && frame && backboard && frontMat && frameGlass && streetAddressOne && streetAddressTwo && zipCode && province && locality)">
         <span if.bind="loading"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Loading...</span>
         <span if.bind="!loading">Listo</span>
       </button>

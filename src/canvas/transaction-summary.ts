@@ -5,6 +5,7 @@ import {Backboard} from "../product/backboard/backboard-service";
 import {MatType} from "../product/mat-type/mat-type-service";
 import {UserPicture} from "../image/user-picture";
 import {Purchase, PurchaseService} from "../purchase/purchase-service";
+import {FrameGlass} from "../product/frame-glass/frame-glass-service";
 
 @inject(EventAggregator, PurchaseService)
 export class TransactionSummary {
@@ -13,6 +14,7 @@ export class TransactionSummary {
   private frame : Frame;
   private backboard : Backboard;
   private frontMat : MatType;
+  private frameGlass : FrameGlass;
   private streetAddressOne : string;
   private streetAddressTwo : string;
   private zipCode : string;
@@ -36,6 +38,9 @@ export class TransactionSummary {
     this.listener.subscribe("front-mat-product-selected", (frontMat : MatType) => {
       this.frontMat = frontMat;
     });
+    this.listener.subscribe("frame-glass-product-selected",(frameGlass : FrameGlass) => {
+      this.frameGlass = frameGlass;
+    });
   }
 
   private calculatedPrice(frame : Frame, m2Price : number) : number {
@@ -57,7 +62,9 @@ export class TransactionSummary {
         this.streetAddressTwo,
         this.zipCode,
         this.province,
-        this.locality
+        this.locality,
+        this.frameGlass,
+        this.calculatedPrice(this.frame, this.frameGlass.m2Price)
       );
       this.purchaseService.post(purchase).then(success => {
         window.location.href = success.transactionInitialPoint;

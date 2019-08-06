@@ -8,14 +8,16 @@ import {DeleteAbleApiService} from "../api/delete-able-api-service";
 import {ApiParser, Entity} from "../api/api-service";
 import {UserPictureParser} from "../image/user-picture-service";
 import {PagedResponseEntity} from "../api/response/response-entity";
+import {FrameGlass, FrameGlassParser} from "../product/frame-glass/frame-glass-service";
 
-@inject(FrameParser, BackboardParser, MatTypeParser, UserPictureParser)
+@inject(FrameParser, BackboardParser, MatTypeParser, UserPictureParser, FrameGlassParser)
 export class PurchaseParser implements ApiParser<Purchase> {
 
   constructor(private readonly frameParser: FrameParser,
               private readonly backboardParser: BackboardParser,
               private readonly matTypeParser: MatTypeParser,
-              private readonly userPictureParser: UserPictureParser) {
+              private readonly userPictureParser: UserPictureParser,
+              private readonly frameGlassParser: FrameGlassParser) {
   }
 
   parseOne(object: any): Purchase {
@@ -38,7 +40,9 @@ export class PurchaseParser implements ApiParser<Purchase> {
       object.zipCode,
       object.province,
       object.locality,
-      object.user
+      object.user,
+      this.frameGlassParser.parseOne(object.frameGlass),
+      object.frameGlassPrice
     );
   }
 
@@ -104,6 +108,8 @@ export class Purchase extends Entity {
   province: string;
   locality: string;
   user: string;
+  frameGlass: FrameGlass;
+  frameGlassPrice: number;
 
   constructor(id: number, userPicture: UserPicture, frame: Frame, framePrice: number,
               backboard: Backboard, backboardPrice: number, frontMat: MatType,
@@ -111,7 +117,8 @@ export class Purchase extends Entity {
               transactionInitialPoint: string, stampDatetime: number,
               status: string, transactionStatus: string,
               streetAddressOne: string, streetAddressTwo: string, zipCode: string,
-              province: string, locality: string, user: string) {
+              province: string, locality: string, user: string, frameGlass: FrameGlass,
+              frameGlassPrice: number) {
     super(id);
     this.userPicture = userPicture;
     this.frame = frame;
@@ -131,13 +138,16 @@ export class Purchase extends Entity {
     this.province = province;
     this.locality = locality;
     this.user = user;
+    this.frameGlass = frameGlass;
+    this.frameGlassPrice = frameGlassPrice;
   }
 
   static create(userPicture: UserPicture, frame: Frame, framePrice: number,
                 backboard: Backboard, backboardPrice: number, frontMat: MatType,
                 frontMatPrice: number, streetAddressOne: string,
                 streetAddressTwo: string, zipCode: string,
-                province: string, locality: string) {
+                province: string, locality: string,
+                frameGlass: FrameGlass, frameGlassPrice: number) {
     return new Purchase(
       null,
       userPicture,
@@ -157,7 +167,9 @@ export class Purchase extends Entity {
       zipCode,
       province,
       locality,
-      null
+      null,
+      frameGlass,
+      frameGlassPrice
     );
   }
 }

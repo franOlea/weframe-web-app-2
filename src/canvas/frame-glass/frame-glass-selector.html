@@ -1,0 +1,21 @@
+<template>
+  <div class="d-none">${selectedFrameGlass.id}</div>
+  <div class="list-group" style="height: 100%;">
+    <button type="button" class="list-group-item list-group-item-action frameGlass-selector-button border-0 ${frameGlass.id == selectedFrameGlass.id ? 'active' : ''}" repeat.for="frameGlass of frameGlasses" click.delegate="select(frameGlass)">
+      <div class="row">
+        <div class="col-md-12 vcenter">
+          <h4 class="list-group-item-heading">${frameGlass.name}</h4>
+          <p class="list-group-item-text" title="${frameGlass.description}">${frameGlass.description}</p>
+          <p class="list-group-item-text" title="${frameGlass.description}">$ ${frameGlass.m2Price} c/m2</p>
+        </div>
+      </div>
+    </button>
+  </div>
+
+  <style>
+    .frameGlass-selector-button {
+      cursor: pointer;
+      overflow: visible;
+    }
+  </style>
+</template>
