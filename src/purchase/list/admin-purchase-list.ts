@@ -1,13 +1,15 @@
 import {inject} from 'aurelia-framework';
 import {Purchase, PurchaseService} from "../purchase-service";
 import {Error} from "../../error/Error";
+import {PictureService} from "../../image/picture-service";
 
-@inject(PurchaseService)
+@inject(PurchaseService, PictureService)
 export class AdminPurchaseList {
 
   private static readonly PAGE_SIZE = 1;
 
   private working : boolean;
+  private downloading: boolean = false;
   private purchases : Purchase[];
   private selectedPurchase : Purchase = null;
   private error : Error;
@@ -16,7 +18,7 @@ export class AdminPurchaseList {
   private currentPage : number;
   private statusFilter : string;
 
-  constructor(private readonly service: PurchaseService){
+  constructor(private readonly service: PurchaseService, private readonly pictureService: PictureService){
   }
 
   created() {
@@ -50,6 +52,18 @@ export class AdminPurchaseList {
 
   private select(purchase : Purchase) {
     this.selectedPurchase = purchase;
+  }
+
+  private download() {
+    this.downloading = true;
+    this.pictureService.getFullSizeImageUrl(this.selectedPurchase.userPicture.picture.key).then(success => {
+      let win = window.open(success, '_blank');
+      win.focus();
+    }, failure => {
+      console.log(failure)
+    }).then(
+      () => this.downloading = false,
+      () => this.downloading = false)
   }
 
   private deselect() {

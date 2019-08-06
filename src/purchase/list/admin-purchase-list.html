@@ -75,7 +75,7 @@
         <div class="modal-body">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" click.delegate="deselect()"><span aria-hidden="true">&times;</span></button>
           <div class="row">
-            <button type="button" class="btn btn-info">
+            <button type="button" class="btn btn-info" click.trigger="download()" disabled.bind="downloading">
               Descargar imagen
             </button>
           </div>
