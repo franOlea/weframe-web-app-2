@@ -6,7 +6,7 @@
       <span class="sr-only">Loading...</span>
     </div>
   </div>
-  <select class="form-control" value.bind="statusFilter" change.delegate="updatePurchaseList(currentPage, AdminPurchaseList.PAGE_SIZE, statusFilter)" disabled.bind="working">
+  <select class="form-control" value.bind="statusFilter" change.delegate="updatePurchaseList(currentPage, AdminPurchaseList.PAGE_SIZE, statusFilter)" if.bind="!working">
     <option>-</option>
     <option>PENDING</option>
     <option>MAKING</option>
@@ -97,7 +97,8 @@
           </div>
           <hr>
           <div class="row">
-            <button type="button" class="btn btn-info" click.trigger="download()" disabled.bind="downloading">
+            <h5 class="card-title" if.bind="!selectedPurchase.userPicture">Imagen Borrada</h5>
+            <button type="button" class="btn btn-info" click.trigger="download()" disabled.bind="downloading" if.bind="selectedPurchase.userPicture">
               Descargar imagen
             </button>
           </div>
@@ -122,9 +123,10 @@
               </div>
             </div>
             <div class="card" style="width: 18rem;">
-              <img src="${selectedPurchase.userPicture.picture.url}" class="card-img-top" alt="${selectedPurchase.userPicture.picture.name}">
+              <img src="${selectedPurchase.userPicture.picture.url}" class="card-img-top" alt="${selectedPurchase.userPicture.picture.name}" if.bind="selectedPurchase.userPicture">
               <div class="card-body">
-                <h5 class="card-title">${selectedPurchase.userPicture.picture.name}</h5>
+                <h5 class="card-title" if.bind="selectedPurchase.userPicture">${selectedPurchase.userPicture.picture.name}</h5>
+                <h5 class="card-title" if.bind="!selectedPurchase.userPicture">Imagen Borrada</h5>
               </div>
             </div>
             <div class="card" style="width: 18rem;">

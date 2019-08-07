@@ -1,6 +1,7 @@
 <template>
   <require from="../../date-format"></require>
   <require from="../../purchase-value-format"></require>
+  <require from="./purchase-status-format"></require>
   <div class="text-center" if.bind="working">
     <div class="spinner-grow" style="width: 30rem; height: 30rem;" role="status">
       <span class="sr-only">Loading...</span>
@@ -24,14 +25,15 @@
     </thead>
     <tbody>
       <tr repeat.for="purchase of purchases">
-        <td>${purchase.userPicture.picture.name}</td>
+        <td if.bind="purchase.userPicture">${purchase.userPicture.picture.name}</td>
+        <td if.bind="!purchase.userPicture">Imagen Borrada</td>
         <td>${purchase.stampDatetime | dateFormat}</td>
         <td>${purchase.frame.name}</td>
         <td>${purchase.backboard.name}</td>
         <td>${purchase.frontMat.name}</td>
         <td>${purchase.frameGlass.name}</td>
         <td>${purchase | purchaseValueFormat}</td>
-        <td>${purchase.status}</td>
+        <td>${purchase.status | purchaseStatusFormat}</td>
         <td>${purchase.id}</td>
         <td>
           <button type="button" class="btn btn-info" data-toggle="modal" data-target="#purchaseDetailModal" click.delegate="select(purchase)">
@@ -70,7 +72,8 @@
           </div>
           <hr>
           <div class="row">
-            <button type="button" class="btn btn-info" click.trigger="download()" disabled.bind="downloading">
+            <h5 class="card-title" if.bind="!selectedPurchase.userPicture">Imagen Borrada</h5>
+            <button type="button" class="btn btn-info" click.trigger="download()" disabled.bind="downloading" if.bind="selectedPurchase.userPicture">
               Descargar imagen
             </button>
           </div>
@@ -95,9 +98,10 @@
               </div>
             </div>
             <div class="card" style="width: 18rem;">
-              <img src="${selectedPurchase.userPicture.picture.url}" class="card-img-top" alt="${selectedPurchase.userPicture.picture.name}">
+              <img src="${selectedPurchase.userPicture.picture.url}" class="card-img-top" alt="${selectedPurchase.userPicture.picture.name}" if.bind="selectedPurchase.userPicture">
               <div class="card-body">
-                <h5 class="card-title">${selectedPurchase.userPicture.picture.name}</h5>
+                <h5 class="card-title" if.bind="selectedPurchase.userPicture">${selectedPurchase.userPicture.picture.name}</h5>
+                <h5 class="card-title" if.bind="!selectedPurchase.userPicture">Imagen Borrada</h5>
               </div>
             </div>
             <div class="card" style="width: 18rem;">

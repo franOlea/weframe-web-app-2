@@ -6,7 +6,7 @@ import {PictureService} from "../../image/picture-service";
 @inject(PurchaseService, PictureService)
 export class AdminPurchaseList {
 
-  private static readonly PAGE_SIZE = 20;
+  private static readonly PAGE_SIZE = 10;
 
   private working : boolean;
   private downloading: boolean = false;

@@ -6,7 +6,7 @@ import {PictureService} from "../../image/picture-service";
 @inject(PurchaseService, PictureService)
 export class UserPurchaseList {
 
-  private static readonly PAGE_SIZE = 20;
+  private static readonly PAGE_SIZE = 10;
 
   private working : boolean;
   private downloading : boolean = false;
@@ -16,7 +16,6 @@ export class UserPurchaseList {
   private hasPrevious : boolean = false;
   private hasMore : boolean = false;
   private currentPage : number;
-  private statusFilter : string;
 
   constructor(private readonly service: PurchaseService, private readonly pictureService: PictureService){
   }

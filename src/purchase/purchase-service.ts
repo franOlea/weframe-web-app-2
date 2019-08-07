@@ -23,7 +23,7 @@ export class PurchaseParser implements ApiParser<Purchase> {
   parseOne(object: any): Purchase {
     return new Purchase(
       object.id,
-      this.userPictureParser.parseOne(object.userPicture),
+      object.userPicture ? this.userPictureParser.parseOne(object.userPicture) : null,
       this.frameParser.parseOne(object.frame),
       object.framePrice,
       this.backboardParser.parseOne(object.backboard),
