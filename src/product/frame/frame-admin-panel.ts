@@ -78,7 +78,7 @@ export class FrameAdminPanel {
     });
   }
 
-  downloadList(page: number = 0, size: number = 10) {
+  downloadList(page: number = 0, size: number = 20) {
     this.listWorking = true;
     this.frameService.get(page, size).then(framesPage => {
       this.listWorking = false;

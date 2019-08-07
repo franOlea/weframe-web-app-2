@@ -74,7 +74,7 @@ export class BackboardAdminPanel {
     });
   }
 
-  downloadList(page: number = 0, size: number = 10) {
+  downloadList(page: number = 0, size: number = 20) {
     this.listWorking = true;
     this.backboardService.get(page, size).then(backboardsPage => {
       this.listWorking = false;
