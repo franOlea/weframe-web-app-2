@@ -70,7 +70,7 @@ export class TransactionSummary {
         window.location.href = success.transactionInitialPoint;
       }, failure => {
         console.log(failure);
-      }).then(event => this.loading = false);
+      });
     }
   }
 }
