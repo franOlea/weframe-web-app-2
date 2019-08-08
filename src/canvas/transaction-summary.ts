@@ -6,6 +6,7 @@ import {MatType} from "../product/mat-type/mat-type-service";
 import {UserPicture} from "../image/user-picture";
 import {Purchase, PurchaseService} from "../purchase/purchase-service";
 import {FrameGlass} from "../product/frame-glass/frame-glass-service";
+import {Error} from "../error/Error";
 
 @inject(EventAggregator, PurchaseService)
 export class TransactionSummary {
@@ -21,6 +22,7 @@ export class TransactionSummary {
   private province : string;
   private locality : string;
   private loading : boolean = false;
+  private error : Error = null;
 
   constructor(private readonly listener: EventAggregator,
               private readonly purchaseService: PurchaseService) {}
@@ -48,7 +50,9 @@ export class TransactionSummary {
   }
 
   private start() {
-    if(!this.loading) {
+    if(!this.loading && this.userPicture && this.frame && this.backboard && this.frontMat
+      && this.frameGlass && this.streetAddressOne && this.streetAddressTwo && this.zipCode
+      && this.province && this.locality) {
       this.loading = true;
       let purchase = Purchase.create(
         this.userPicture,
@@ -69,7 +73,8 @@ export class TransactionSummary {
       this.purchaseService.post(purchase).then(success => {
         window.location.href = success.transactionInitialPoint;
       }, failure => {
-        console.log(failure);
+        this.error = new Error("Ups!", 'Parece que el sistema no response, por favor intenta nuevamente mas tarde.');
+        this.loading = false;
       });
     }
   }

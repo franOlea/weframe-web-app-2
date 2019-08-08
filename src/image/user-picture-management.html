@@ -1,13 +1,67 @@
 <template>
   <require from="./image-upload-form"></require>
   <require from="./user-picture-gallery"></require>
+  <require from="./blob-to-url"></require>
+  <require from="./file-list-to-array"></require>
+  <require from="./user-picture-to-url"></require>
+  <require from="./user-picture-thumbnail"></require>
   <div class="row" style="height: 100%">
     <div class="col-4" style="height: 100%; padding: 20px;">
-      <image-upload-form></image-upload-form>
+      <div class="form-group" style="height: 20%;">
+        <h1>Subir imagen</h1>
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" name="file" id="imageFile" required accept=".jpg" value.bind="formFile" files.bind="formFiles" lang="es">
+          <label class="custom-file-label" for="imageFile">Click aqui para seleccionar Archivo</label>
+        </div>
+      </div>
+      <div style="height: 80%; overflow-y: scroll; overflow-x: hidden;">
+        <div class="row" repeat.for="file of formFiles | fileListToArray">
+          <div class="col-6">
+            <img src.bind="file | blobToUrl" class="card-img-top">
+          </div>
+          <div class="col-6">
+            <h3>${file.name}</h3>
+            <h3>${file.type}</h3>
+            <h3>${(file.size / 1024 / 1024).toFixed(2)} mb</h3>
+            <p>Last Modified: ${file.lastModifiedDate}</p>
+            <div if.bind="formError">
+              <div class="alert alert-danger">
+                <strong>${formError.title}</strong> ${formError.message}
+              </div>
+            </div>
+            <div class="progress" if.bind="formLoading">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow.bind="formProgress" aria-valuemin="0" aria-valuemax.bind="formUploadSize" css="width: ${formProgressPercentage}%"></div>
+            </div>
+            <button class.bind="formLoading ? 'btn btn-lg btn-outline-success' : 'btn btn-lg btn-success'" type="submit" click.trigger="upload()" disabled.bind="formLoading || formSuccess">
+              <span if.bind="formLoading"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Subiendo...</span>
+              <span if.bind="!formLoading && !formSuccess">Subir</span>
+              <span if.bind="formSuccess">Listo! <i class="fas fa-check"></i></span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-8" style="height: 100%; padding: 20px;">
-      <user-picture-gallery></user-picture-gallery>
+      <button class="btn btn-lg btn-outline-primary" type="submit" click.trigger="download()" disabled.bind="galleryLoading">
+        <span if.bind="galleryLoading"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Cargando...</span>
+        <span if.bind="!galleryLoading"><i class="fas fa-sync-alt"></i></span>
+      </button>
+      <div class="row" style="height: 90%; overflow-y: scroll; overflow-x: hidden;">
+        <div class="col-3 user-picture-card" repeat.for="userPicture of userPictures" style="max-width: inherit !important;">
+          <div class="card" style="width: 18rem;">
+            <user-picture-thumbnail
+                user-picture.bind="userPicture"
+                user-pictures.bind="userPictures">
+            </user-picture-thumbnail>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
+  <style>
+    .user-picture-card {
+      padding-bottom: 15px;
+    }
+  </style>
 </template>
