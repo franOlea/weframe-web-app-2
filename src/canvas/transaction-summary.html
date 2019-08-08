@@ -60,7 +60,7 @@
         </div>
       </div>
       <button class="btn btn-success" type="button" click.delegate="start()" disabled.bind="loading || !(userPicture && frame && backboard && frontMat && frameGlass && streetAddressOne && streetAddressTwo && zipCode && province && locality)">
-        <span if.bind="loading"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Loading...</span>
+        <span if.bind="loading"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Cargando...</span>
         <span if.bind="!loading && (userPicture && frame && backboard && frontMat && frameGlass && streetAddressOne && streetAddressTwo && zipCode && province && locality)">Listo</span>
         <span if.bind="!loading && (!userPicture || !frame || !backboard || !frontMat || !frameGlass || !streetAddressOne || !streetAddressTwo || !zipCode || !province || !locality)">Completá todos los datos!</span>
       </button>
