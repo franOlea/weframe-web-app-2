@@ -16,7 +16,7 @@ export class UserPictureGallery {
   download() {
     if(!this.loading) {
       this.loading = true;
-      this.userPictureService.get(0, 10).then(success => {
+      this.userPictureService.get(0, 20).then(success => {
         this.userPictures = success.entity;
       }, failure => {
         console.error(failure);
